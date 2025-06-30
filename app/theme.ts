@@ -17,8 +17,6 @@ const theme = createTheme({
       primary: "#1c1b1f",
       secondary: "#84234f",
     },
-
-    // Eigene Farbgruppen
     custom: {
       dark: "#1C1B1F",
       black: "#000000",
@@ -37,10 +35,26 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "var(--font-roboto)",
+    fontFamily: ["RedHatDisplay", "sans-serif"].join(","),
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: (theme) => ({
+        "@font-face": [
+          {
+            fontFamily: "RedHatDisplay",
+            fontStyle: "normal",
+            fontDisplay: "swap",
+            fontWeight: "100 900",
+            src: `url('/fonts/RedHatDisplay/RedHatDisplay-VariableFont_wght.ttf') format('truetype')`,
+          },
+        ],
+      }),
+    },
   },
 });
 
+// Type-Erweiterung für custom-Farben
 declare module "@mui/material/styles" {
   interface Palette {
     custom: {
@@ -53,4 +67,5 @@ declare module "@mui/material/styles" {
     };
   }
 }
+
 export default theme;
