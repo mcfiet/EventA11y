@@ -1,11 +1,19 @@
 "use client";
-import { Box, Button, Typography, useTheme } from "@mui/material";
+
+import {
+  Box,
+  Button,
+  Typography,
+  useTheme,
+  useMediaQuery,
+  SxProps,
+  Theme,
+} from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { usePathname } from "next/navigation";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useRef, useState } from "react";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface MenuItem {
   name: string;
@@ -23,90 +31,68 @@ const menuItems: MenuItem[] = [
 export function Navbar() {
   const theme = useTheme();
   const pathname = usePathname();
-  const [menuToggled, setMenuToggled] = useState(false);
   const firstMenuItemRef = useRef<HTMLAnchorElement>(null);
+
   const [jsEnabled, setJsEnabled] = useState(false);
+  const [menuToggled, setMenuToggled] = useState(false);
 
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
-  useEffect(() => {
-    setJsEnabled(true);
-  }, []);
+  // Mark JS as enabled
+  useEffect(() => setJsEnabled(true), []);
 
+  // Always show menu on desktop
   useEffect(() => {
-    if (isDesktop) {
-      setMenuToggled(true); // Immer offen auf md+
-    }
+    if (isDesktop) setMenuToggled(true);
   }, [isDesktop]);
 
+  // Focus first item on open
   useEffect(() => {
     if (menuToggled && firstMenuItemRef.current) {
       firstMenuItemRef.current.focus();
     }
   }, [menuToggled]);
 
+  // ESC to close menu (only on mobile)
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && menuToggled) {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && menuToggled && !isDesktop) {
         setMenuToggled(false);
       }
     };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [menuToggled, isDesktop]);
 
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [menuToggled]);
+  const headerStyles: SxProps<Theme> = {
+    position: "fixed",
+    top: { xs: menuToggled ? 0 : 40, md: 40 },
+    left: { xs: menuToggled ? 0 : "50%", md: "50%" },
+    right: { xs: menuToggled ? 0 : undefined, md: "inherit" },
+    bottom: { xs: menuToggled ? 0 : undefined, md: "inherit" },
+    transform: {
+      xs: menuToggled ? "none" : "translateX(-50%)",
+      md: "translateX(-50%)",
+    },
+    width: { xs: menuToggled ? "100%" : "90%", md: "90%" },
+    display: "flex",
+    flexDirection: { xs: "column", md: "row" },
+    gap: 4,
+    backgroundColor: theme.palette.background.paper,
+    px: "50px",
+    py: "20px",
+    borderRadius: { xs: menuToggled ? 0 : "16px", md: "16px" },
+    boxShadow: 4,
+    transition: "all 0.3s ease-out",
+    zIndex: 10,
+  };
 
   return (
-    <Box
-      component="header"
-      sx={{
-        position: "fixed",
-        top: {
-          xs: menuToggled ? 0 : 40,
-          md: 40,
-        },
-        left: {
-          xs: menuToggled ? 0 : "50%",
-          md: "50%",
-        },
-        right: {
-          xs: menuToggled ? 0 : undefined,
-          md: "inherit",
-        },
-        bottom: {
-          xs: menuToggled ? 0 : undefined,
-          md: "inherit",
-        },
-        transform: {
-          xs: menuToggled ? "none" : "translateX(-50%)",
-          md: "translateX(-50%)",
-        },
-        width: {
-          xs: menuToggled ? "100%" : "90%",
-          md: "90%",
-        },
-        display: "flex",
-        flexDirection: {
-          xs: "column",
-          md: "row",
-        },
-        gap: 4,
-        backgroundColor: theme.palette.background.paper,
-        px: "50px",
-        py: "20px",
-        borderRadius: {
-          xs: menuToggled ? 0 : "16px",
-          md: "16px",
-        },
-        boxShadow: 4,
-        transition: "all 0.3s ease-out",
-      }}
-    >
+    <Box component="header" sx={headerStyles}>
       <Typography component="h1" sx={visuallyHidden}>
         EventA11y - barrierefrei Events buchen
       </Typography>
+
       <Box
         sx={{
           width: "100%",
@@ -115,33 +101,26 @@ export function Navbar() {
           alignItems: "center",
         }}
       >
-        <Box
-          component="a"
-          href="/"
-          sx={{
-            zIndex: 3,
-          }}
-        >
+        <Box component="a" href="/" sx={{ zIndex: 3 }}>
           <Box component="img" src="/logo.svg" alt="Startseite EventA11y" />
         </Box>
+
         {jsEnabled && (
           <Button
             aria-label={menuToggled ? "Menü schließen" : "Menü öffnen"}
             aria-expanded={menuToggled}
             aria-controls="menuItems"
+            onClick={() => setMenuToggled(!menuToggled)}
             sx={{
-              display: {
-                xs: "block",
-                md: "none",
-              },
+              display: { xs: "block", md: "none" },
               zIndex: 3,
             }}
-            onClick={() => setMenuToggled(!menuToggled)}
           >
             {menuToggled ? <CloseIcon /> : <MenuIcon />}
           </Button>
         )}
       </Box>
+
       <Box
         component="nav"
         role="navigation"
@@ -150,25 +129,20 @@ export function Navbar() {
         sx={{
           ...(jsEnabled && !menuToggled ? visuallyHidden : {}),
           display: "flex",
-          flexDirection: {
-            xs: "column",
-            md: "row",
-          },
+          flexDirection: { xs: "column", md: "row" },
           alignItems: "center",
         }}
       >
         <Typography component="h2" id="mainmenulabel" sx={visuallyHidden}>
           Main Menu
         </Typography>
+
         <Box
           id="menuItems"
           component="ul"
           sx={{
             display: "flex",
-            flexDirection: {
-              xs: "column",
-              md: "row",
-            },
+            flexDirection: { xs: "column", md: "row" },
             alignItems: "center",
             gap: 4,
             listStyle: "none",
@@ -176,19 +150,24 @@ export function Navbar() {
             p: 0,
           }}
         >
-          {menuItems.map((menuItem, index) => (
-            <Box component="li" key={menuItem.name}>
+          {menuItems.map((item, i) => (
+            <Box component="li" key={item.name}>
               <Typography
                 component="a"
-                href={menuItem.href}
-                {...(menuItem.href == pathname && { "aria-current": "page" })}
-                ref={index === 0 ? firstMenuItemRef : null}
-                tabIndex={0} // Sicherstellen, dass es fokussierbar ist
+                href={item.href}
+                {...(item.href === pathname && { "aria-current": "page" })}
+                ref={i === 0 ? firstMenuItemRef : null}
+                tabIndex={0}
                 sx={{
                   whiteSpace: "nowrap",
+                  "&:focus": {
+                    outline: "2px solid",
+                    outlineColor: theme.palette.primary.main,
+                    outlineOffset: "4px",
+                  },
                 }}
               >
-                {menuItem.name}
+                {item.name}
               </Typography>
             </Box>
           ))}
