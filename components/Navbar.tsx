@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useRef, useState } from "react";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface MenuItem {
   name: string;
@@ -24,6 +25,19 @@ export function Navbar() {
   const pathname = usePathname();
   const [menuToggled, setMenuToggled] = useState(false);
   const firstMenuItemRef = useRef<HTMLAnchorElement>(null);
+  const [jsEnabled, setJsEnabled] = useState(false);
+
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+
+  useEffect(() => {
+    setJsEnabled(true);
+  }, []);
+
+  useEffect(() => {
+    if (isDesktop) {
+      setMenuToggled(true); // Immer offen auf md+
+    }
+  }, [isDesktop]);
 
   useEffect(() => {
     if (menuToggled && firstMenuItemRef.current) {
@@ -59,11 +73,11 @@ export function Navbar() {
         },
         right: {
           xs: menuToggled ? 0 : undefined,
-          md: undefined,
+          md: "inherit",
         },
         bottom: {
           xs: menuToggled ? 0 : undefined,
-          md: undefined,
+          md: "inherit",
         },
         transform: {
           xs: menuToggled ? "none" : "translateX(-50%)",
@@ -82,7 +96,10 @@ export function Navbar() {
         backgroundColor: theme.palette.background.paper,
         px: "50px",
         py: "20px",
-        borderRadius: menuToggled ? 0 : "16px",
+        borderRadius: {
+          xs: menuToggled ? 0 : "16px",
+          md: "16px",
+        },
         boxShadow: 4,
         transition: "all 0.3s ease-out",
       }}
@@ -107,21 +124,23 @@ export function Navbar() {
         >
           <Box component="img" src="/logo.svg" alt="Startseite EventA11y" />
         </Box>
-        <Button
-          aria-label={menuToggled ? "Menü schließen" : "Menü öffnen"}
-          aria-expanded={menuToggled}
-          aria-controls="menuItems"
-          sx={{
-            display: {
-              xs: "block",
-              md: "none",
-            },
-            zIndex: 3,
-          }}
-          onClick={() => setMenuToggled(!menuToggled)}
-        >
-          {menuToggled ? <CloseIcon /> : <MenuIcon />}
-        </Button>
+        {jsEnabled && (
+          <Button
+            aria-label={menuToggled ? "Menü schließen" : "Menü öffnen"}
+            aria-expanded={menuToggled}
+            aria-controls="menuItems"
+            sx={{
+              display: {
+                xs: "block",
+                md: "none",
+              },
+              zIndex: 3,
+            }}
+            onClick={() => setMenuToggled(!menuToggled)}
+          >
+            {menuToggled ? <CloseIcon /> : <MenuIcon />}
+          </Button>
+        )}
       </Box>
       <Box
         component="nav"
@@ -129,10 +148,13 @@ export function Navbar() {
         aria-label="Hauptnavigation"
         aria-labelledby="mainmenulabel"
         sx={{
-          display: {
-            xs: menuToggled ? "block" : "none",
-            md: "flex",
+          ...(jsEnabled && !menuToggled ? visuallyHidden : {}),
+          display: "flex",
+          flexDirection: {
+            xs: "column",
+            md: "row",
           },
+          alignItems: "center",
         }}
       >
         <Typography component="h2" id="mainmenulabel" sx={visuallyHidden}>
