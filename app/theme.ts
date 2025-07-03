@@ -76,7 +76,31 @@ const theme = createTheme({
     MuiLink: {
       styleOverrides: {
         root: ({ theme }) => ({
+          textDecoration: "none",
           color: theme.palette.custom.primary,
+          padding: 4,
+          borderRadius: "4px",
+          "&:focus-visible": {
+            outline: `2px solid ${theme.palette.primary.main}`,
+            outlineOffset: "8px",
+            borderRadius: "4px",
+          },
+          "&:hover:focus-visible": {
+            outlineOffset: "8px",
+            borderRadius: "4px",
+          },
+          "nav &:active": {
+            color: theme.palette.background.paper,
+            backgroundColor: theme.palette.primary.main,
+            textDecoration: "underline",
+          },
+          "nav &:hover": {
+            textDecoration: "underline",
+          },
+
+          'nav &[aria-current="page"]': {
+            fontWeight: "bold",
+          },
         }),
       },
     },
@@ -105,11 +129,10 @@ const theme = createTheme({
           },
           "nav &:active": {
             color: theme.palette.background.paper,
-            backgroundColor: "#024",
+            backgroundColor: theme.palette.primary.main,
             textDecoration: "underline",
           },
           "nav &:hover": {
-            color: theme.palette.custom.primary,
             textDecoration: "underline",
           },
 
