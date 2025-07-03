@@ -4,7 +4,7 @@ import { visuallyHidden } from "@mui/utils";
 import { usePathname } from "next/navigation";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface MenuItem {
   name: string;
@@ -23,6 +23,14 @@ export function Navbar() {
   const theme = useTheme();
   const pathname = usePathname();
   const [menuToggled, setMenuToggled] = useState(false);
+  const firstMenuItemRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    if (menuToggled && firstMenuItemRef.current) {
+      firstMenuItemRef.current.focus();
+    }
+  }, [menuToggled]);
+
   return (
     <Box
       component="header"
@@ -133,12 +141,14 @@ export function Navbar() {
             p: 0,
           }}
         >
-          {menuItems.map((menuItem) => (
+          {menuItems.map((menuItem, index) => (
             <Box component="li" key={menuItem.name}>
               <Typography
                 component="a"
                 href={menuItem.href}
                 {...(menuItem.href == pathname && { "aria-current": "page" })}
+                ref={index === 0 ? firstMenuItemRef : null}
+                tabIndex={0} // Sicherstellen, dass es fokussierbar ist
                 sx={{
                   whiteSpace: "nowrap",
                 }}
