@@ -52,18 +52,24 @@ const theme = createTheme({
         a: {
           color: theme.palette.secondary.main,
           textDecoration: "none",
-        },
-        "nav a:active": {
-          color: theme.palette.background.paper,
-          backgroundColor: "#024",
-          textDecoration: "underline",
-        },
-        "nav a:hover, nav a:focus": {
-          color: theme.palette.custom.primary,
-          textDecoration: "underline",
-        },
-        'nav a[aria-current="page"]': {
-          fontWeight: "bold",
+          "&:focus": {
+            outline: `2px solid ${theme.palette.primary.main}`,
+            outlineOffset: "8px",
+            borderRadius: 1,
+          },
+          "nav &:active": {
+            color: theme.palette.background.paper,
+            backgroundColor: "#024",
+            textDecoration: "underline",
+          },
+          "nav &:hover": {
+            color: theme.palette.custom.primary,
+            textDecoration: "underline",
+          },
+
+          'nav &[aria-current="page"]': {
+            fontWeight: "bold",
+          },
         },
       }),
     },
