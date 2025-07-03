@@ -5,7 +5,6 @@ import {
   Button,
   Typography,
   useTheme,
-  useMediaQuery,
   SxProps,
   Theme,
 } from "@mui/material";
@@ -33,18 +32,7 @@ export function Navbar() {
   const pathname = usePathname();
   const firstMenuItemRef = useRef<HTMLAnchorElement>(null);
 
-  const [jsEnabled, setJsEnabled] = useState(false);
   const [menuToggled, setMenuToggled] = useState(false);
-
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
-
-  // Mark JS as enabled
-  useEffect(() => setJsEnabled(true), []);
-
-  // Always show menu on desktop
-  useEffect(() => {
-    if (isDesktop) setMenuToggled(true);
-  }, [isDesktop]);
 
   // Focus first item on open
   useEffect(() => {
@@ -56,13 +44,13 @@ export function Navbar() {
   // ESC to close menu (only on mobile)
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && menuToggled && !isDesktop) {
+      if (e.key === "Escape" && menuToggled) {
         setMenuToggled(false);
       }
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, [menuToggled, isDesktop]);
+  }, [menuToggled]);
 
   const headerStyles: SxProps<Theme> = {
     position: "fixed",
@@ -105,20 +93,18 @@ export function Navbar() {
           <Box component="img" src="/logo.svg" alt="Startseite EventA11y" />
         </Box>
 
-        {jsEnabled && (
-          <Button
-            aria-label={menuToggled ? "Menü schließen" : "Menü öffnen"}
-            aria-expanded={menuToggled}
-            aria-controls="menuItems"
-            onClick={() => setMenuToggled(!menuToggled)}
-            sx={{
-              display: { xs: "block", md: "none" },
-              zIndex: 3,
-            }}
-          >
-            {menuToggled ? <CloseIcon /> : <MenuIcon />}
-          </Button>
-        )}
+        <Button
+          aria-label={menuToggled ? "Menü schließen" : "Menü öffnen"}
+          aria-expanded={menuToggled}
+          aria-controls="menuItems"
+          onClick={() => setMenuToggled(!menuToggled)}
+          sx={{
+            display: { xs: "block", md: "none" },
+            zIndex: 3,
+          }}
+        >
+          {menuToggled ? <CloseIcon /> : <MenuIcon />}
+        </Button>
       </Box>
 
       <Box
@@ -127,10 +113,16 @@ export function Navbar() {
         aria-label="Hauptnavigation"
         aria-labelledby="mainmenulabel"
         sx={{
-          ...(jsEnabled && !menuToggled ? visuallyHidden : {}),
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           alignItems: "center",
+          ...(menuToggled
+            ? {}
+            : {
+                [theme.breakpoints.down("md")]: {
+                  display: "none",
+                },
+              }),
         }}
       >
         <Typography component="h2" id="mainmenulabel" sx={visuallyHidden}>
