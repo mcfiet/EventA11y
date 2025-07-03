@@ -145,22 +145,23 @@ export function Navbar() {
         >
           {menuItems.map((item, i) => (
             <Box component="li" key={item.name}>
-              <Link
-                href={item.href}
-                {...(item.href === pathname && { "aria-current": "page" })}
-                ref={i === 0 ? firstMenuItemRef : null}
-                tabIndex={0}
-                sx={{
-                  whiteSpace: "nowrap",
-                  "&:focus": {
-                    outline: "2px solid",
-                    outlineColor: theme.palette.primary.main,
-                    outlineOffset: "4px",
-                  },
-                }}
-              >
-                {item.name}
-              </Link>
+              {i === menuItems.length - 1 ? (
+                <Button href="/kontakt" component="a" tabIndex={0}>
+                  {item.name}
+                </Button>
+              ) : (
+                <Link
+                  href={item.href}
+                  {...(item.href === pathname && { "aria-current": "page" })}
+                  ref={i === 0 ? firstMenuItemRef : null}
+                  tabIndex={0}
+                  sx={{
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {item.name}
+                </Link>
+              )}
             </Box>
           ))}
         </Box>

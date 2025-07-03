@@ -38,6 +38,38 @@ const theme = createTheme({
     fontFamily: ["RedHatDisplay", "sans-serif"].join(","),
   },
   components: {
+    MuiButton: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          fontSize: "16px",
+          borderRadius: 8,
+          textTransform: "none",
+          fontWeight: "bold",
+          padding: "12px 30px",
+          backgroundColor: theme.palette.primary.main,
+          "&:hover": {
+            backgroundColor: theme.palette.primary.dark,
+          },
+        }),
+        outlined: ({ theme }) => ({
+          border: `2px solid ${theme.palette.primary.main}`,
+        }),
+      },
+      defaultProps: {
+        disableElevation: true,
+        variant: "contained",
+        color: "primary",
+      },
+      variants: [
+        {
+          props: { color: "secondary" },
+          style: ({ theme }) => ({
+            backgroundColor: theme.palette.secondary.main,
+            color: theme.palette.getContrastText(theme.palette.secondary.main),
+          }),
+        },
+      ],
+    },
     MuiLink: {
       styleOverrides: {
         root: ({ theme }) => ({
