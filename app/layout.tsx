@@ -6,6 +6,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/app/theme";
 import { CssBaseline } from "@mui/material";
 import { Navbar } from "@/components/Navbar";
+import SkipLinks from "@/components/SkipLinks";
 
 export const metadata: Metadata = {
   title: "EventA11y - Book Events accessible",
@@ -23,6 +24,7 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
+            <SkipLinks />
             <Navbar />
             {children}
           </ThemeProvider>

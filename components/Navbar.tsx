@@ -76,7 +76,7 @@ export function Navbar() {
   };
 
   return (
-    <Box component="header" sx={headerStyles}>
+    <Box component="header" id="navigation" sx={headerStyles}>
       <Typography component="h1" sx={visuallyHidden}>
         EventA11y - barrierefrei Events buchen
       </Typography>
