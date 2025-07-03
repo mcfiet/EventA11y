@@ -68,8 +68,7 @@ export function Navbar() {
     flexDirection: { xs: "column", md: "row" },
     gap: 4,
     backgroundColor: theme.palette.background.paper,
-    px: "50px",
-    py: "20px",
+    p: "20px 20px 20px 50px",
     borderRadius: { xs: menuToggled ? 0 : "16px", md: "16px" },
     boxShadow: 4,
     transition: "all 0.3s ease-out",
@@ -100,7 +99,7 @@ export function Navbar() {
           aria-controls="menuItems"
           onClick={() => setMenuToggled(!menuToggled)}
           sx={{
-            display: { xs: "block", md: "none" },
+            display: { xs: "flex", md: "none" },
             zIndex: 3,
           }}
         >
