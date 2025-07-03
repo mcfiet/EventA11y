@@ -31,6 +31,19 @@ export function Navbar() {
     }
   }, [menuToggled]);
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && menuToggled) {
+        setMenuToggled(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [menuToggled]);
+
   return (
     <Box
       component="header"
