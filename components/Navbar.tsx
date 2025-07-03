@@ -7,6 +7,7 @@ import {
   useTheme,
   SxProps,
   Theme,
+  Link,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { usePathname } from "next/navigation";
@@ -144,8 +145,7 @@ export function Navbar() {
         >
           {menuItems.map((item, i) => (
             <Box component="li" key={item.name}>
-              <Typography
-                component="a"
+              <Link
                 href={item.href}
                 {...(item.href === pathname && { "aria-current": "page" })}
                 ref={i === 0 ? firstMenuItemRef : null}
@@ -160,7 +160,7 @@ export function Navbar() {
                 }}
               >
                 {item.name}
-              </Typography>
+              </Link>
             </Box>
           ))}
         </Box>

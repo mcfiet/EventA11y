@@ -38,6 +38,13 @@ const theme = createTheme({
     fontFamily: ["RedHatDisplay", "sans-serif"].join(","),
   },
   components: {
+    MuiLink: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          color: theme.palette.custom.primary,
+        }),
+      },
+    },
     MuiCssBaseline: {
       styleOverrides: (theme) => ({
         "@font-face": [
