@@ -42,12 +42,15 @@ const theme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           fontSize: "16px",
-          borderRadius: 8,
+          borderRadius: "12px",
           textTransform: "none",
           fontWeight: "bold",
           padding: "12px 30px",
           backgroundColor: theme.palette.primary.main,
+          color: theme.palette.getContrastText(theme.palette.primary.dark),
+
           "&:hover": {
+            color: theme.palette.getContrastText(theme.palette.primary.dark),
             backgroundColor: theme.palette.primary.dark,
           },
         }),
@@ -91,10 +94,14 @@ const theme = createTheme({
         a: {
           color: theme.palette.secondary.main,
           textDecoration: "none",
-          "&:focus": {
+          "&:focus-visible": {
             outline: `2px solid ${theme.palette.primary.main}`,
             outlineOffset: "8px",
-            borderRadius: 1,
+            borderRadius: "4px",
+          },
+          "&:hover:focus-visible": {
+            outlineOffset: "8px",
+            borderRadius: "4px",
           },
           "nav &:active": {
             color: theme.palette.background.paper,
