@@ -4,7 +4,7 @@ import "./globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/app/theme";
-import { CssBaseline } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 import { Navbar } from "@/components/Navbar";
 import SkipLinks from "@/components/SkipLinks";
 
@@ -26,7 +26,9 @@ export default function RootLayout({
             <CssBaseline />
             <SkipLinks />
             <Navbar />
-            {children}
+            <Box component="main" id="main">
+              {children}
+            </Box>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
