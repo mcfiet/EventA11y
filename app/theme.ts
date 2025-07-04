@@ -20,8 +20,8 @@ const theme = createTheme({
     custom: {
       dark: "#1C1B1F",
       black: "#000000",
-      black_60: "rgba(0,0,0,0.6)",
-      black_23: "rgba(0,0,0,0.23",
+      black_60: "#666666",
+      black_23: "#C4C4C4",
       white: "#FFFFFF",
       white_70: "rgba(255,255,255,0.7)",
       light_blue_1: "#f4f9fe",
