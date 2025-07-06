@@ -45,7 +45,7 @@ const theme = createTheme({
           fontSize: "16px",
           fontWeight: 500,
           color: theme.palette.text.primary,
-          marginBottom: theme.spacing(2),
+          marginBottom: theme.spacing(1),
           "&.Mui-focused": {
             color: theme.palette.text.primary,
           },
