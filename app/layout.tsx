@@ -7,6 +7,9 @@ import theme from "@/app/theme";
 import { Box, CssBaseline } from "@mui/material";
 import { Navbar } from "@/components/Navbar";
 import SkipLinks from "@/components/SkipLinks";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import DateProvider from "@/components/DateProvider";
 
 export const metadata: Metadata = {
   title: "EventA11y - Book Events accessible",
@@ -23,12 +26,14 @@ export default function RootLayout({
       <body>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <SkipLinks />
-            <Navbar />
-            <Box component="main" id="main">
-              {children}
-            </Box>
+            <DateProvider>
+              <CssBaseline />
+              <SkipLinks />
+              <Navbar />
+              <Box component="main" id="main">
+                {children}
+              </Box>
+            </DateProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
