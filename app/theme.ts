@@ -37,6 +37,19 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: ["RedHatDisplay", "sans-serif"].join(","),
+    h2: {
+      fontSize: "57px",
+      textTransform: "uppercase",
+      fontWeight: 400,
+    },
+    h3: {
+      fontSize: "32px",
+      fontWeight: "bold",
+    },
+    body1: {
+      fontSize: "16px",
+      fontWeight: 400,
+    },
   },
   components: {
     MuiAccordion: {
