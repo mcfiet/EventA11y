@@ -39,6 +39,59 @@ const theme = createTheme({
     fontFamily: ["RedHatDisplay", "sans-serif"].join(","),
   },
   components: {
+    MuiAccordion: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          width: "100%",
+          borderRadius: "16px",
+          backgroundColor: theme.palette.background.paper,
+          marginBottom: theme.spacing(2),
+          p: theme.spacing(8),
+          "&:before": {
+            display: "none",
+          },
+          "&.Mui-expanded": {
+            margin: "0 0 16px 0",
+          },
+          "&:hover": {
+            borderColor: theme.palette.custom.black_60,
+          },
+          "&.Mui-focused": {
+            outline: `2px solid ${theme.palette.primary.main}`,
+            outlineOffset: "2px",
+          },
+          "&:first-of-type": {
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+          },
+          "&:last-of-type": {
+            borderBottomLeftRadius: 16,
+            borderBottomRightRadius: 16,
+          },
+        }),
+      },
+    },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          padding: "20px",
+          fontWeight: "bold",
+          fontSize: "24px",
+          "& .MuiAccordionSummary-content": {
+            margin: 0,
+          },
+        }),
+      },
+    },
+    MuiAccordionDetails: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          padding: theme.spacing(2),
+          color: theme.palette.text.primary,
+          fontSize: "15px",
+        }),
+      },
+    },
     MuiInputLabel: {
       styleOverrides: {
         root: ({ theme }) => ({
