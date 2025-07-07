@@ -55,6 +55,12 @@ export default function Home() {
           </Grid>
         </Grid>
       </Box>
+      <Box component="section" id="faq">
+        <Typography component="h2" variant="h2">
+          FAQs
+        </Typography>
+        <Faqs />
+      </Box>
     </>
   );
 }
