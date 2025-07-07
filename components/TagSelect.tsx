@@ -24,7 +24,7 @@ export default function TagSelect() {
       renderInput={(params) => (
         <TextField
           {...params}
-          placeholder="Tags auswählen oder suchen"
+          placeholder="Tags auswählen oder erstellen"
           variant="outlined"
           fullWidth
         />

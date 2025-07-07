@@ -97,7 +97,7 @@ export default function CreateEventForm() {
             >
               Titel*
             </InputLabel>
-            <InputBase placeholder="Max Mustermann" id="title" />
+            <InputBase placeholder="Ein toller Titel" id="title" />
           </FormControl>
           <FormControl variant="standard">
             <InputLabel
@@ -122,7 +122,7 @@ export default function CreateEventForm() {
           </FormControl>
           <FormControl variant="standard">
             <InputLabel
-              htmlFor="name"
+              htmlFor="location-name"
               shrink
               sx={{
                 fontSize: "16px",
@@ -131,9 +131,9 @@ export default function CreateEventForm() {
                 position: "static",
               }}
             >
-              Name*
+              Location Name*
             </InputLabel>
-            <InputBase placeholder="Max Mustermann" id="name" />
+            <InputBase placeholder="Musterfirma" id="location-name" />
           </FormControl>
           <FormControl variant="standard">
             <InputLabel
@@ -148,7 +148,7 @@ export default function CreateEventForm() {
             >
               Straße & Hausnummer*
             </InputLabel>
-            <InputBase placeholder="Max Mustermann" id="address" />
+            <InputBase placeholder="Musterstraße 1a" id="address" />
           </FormControl>
           <Box sx={{ display: "flex", gap: 2 }}>
             <FormControl variant="standard">
@@ -164,7 +164,7 @@ export default function CreateEventForm() {
               >
                 Postleitzahl*
               </InputLabel>
-              <InputBase placeholder="Max Mustermann" id="zipCode" />
+              <InputBase placeholder="12345" id="zipCode" />
             </FormControl>
             <FormControl variant="standard">
               <InputLabel
@@ -179,7 +179,7 @@ export default function CreateEventForm() {
               >
                 Ort*
               </InputLabel>
-              <InputBase placeholder="Max Mustermann" id="city" />
+              <InputBase placeholder="Musterort" id="city" />
             </FormControl>
           </Box>
           <FormControlLabel
