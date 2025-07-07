@@ -1,24 +1,48 @@
 "use client";
 
 import {
-  Box,
-  Typography,
   Card,
-  CardMedia,
   CardContent,
-  Button,
+  CardMedia,
+  Typography,
   Chip,
+  Button,
   Stack,
-  useTheme,
+  Box,
 } from "@mui/material";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { MusicNote } from "@mui/icons-material";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import MusicNote from "@mui/icons-material/MusicNote";
+import { useTheme } from "@mui/material/styles";
 
-export default function EventCard() {
+type EventCardProps = {
+  title: string;
+  startDate: string;
+  location: string;
+  image: string;
+  imageAlt: string;
+  tag: string;
+};
+
+export default function EventCard({
+  title,
+  startDate,
+  location,
+  image,
+  imageAlt,
+  tag,
+}: EventCardProps) {
   const theme = useTheme();
 
+  const dateObj = new Date(startDate);
+  const day = dateObj.getDate();
+  const month = dateObj
+    .toLocaleString("default", { month: "short" })
+    .toUpperCase();
+  const time = dateObj.toLocaleTimeString("de-DE", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
   return (
     <Card
       elevation={0}
@@ -29,21 +53,21 @@ export default function EventCard() {
         boxShadow: 3,
       }}
     >
-      {/* Image & Badge */}
+      {/* Image */}
       <Box sx={{ position: "relative" }}>
         <CardMedia
           component="img"
-          height="220"
-          image="/event-card.png" // Hier ggf. durch dein Bild ersetzen
-          alt="Event Cover"
+          height="300"
+          image={image}
+          alt={imageAlt}
           sx={{
             objectFit: "cover",
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
           }}
         />
-        {/* Category Badge */}
-        {/* Date Box */}
+
+        {/* Badge & Date */}
         <Box
           sx={{
             position: "absolute",
@@ -55,7 +79,7 @@ export default function EventCard() {
           }}
         >
           <Chip
-            label="Musical"
+            label={tag}
             sx={{
               height: "auto",
               backgroundColor: theme.palette.background.paper,
@@ -85,19 +109,18 @@ export default function EventCard() {
                 color: theme.palette.primary.main,
               }}
             >
-              25
+              {day}
             </Typography>
             <Typography
               variant="caption"
               fontWeight="bold"
               sx={{
-                lineHeight: "20px",
                 fontSize: 32,
                 textTransform: "uppercase",
                 color: theme.palette.primary.main,
               }}
             >
-              JAN
+              {month}
             </Typography>
           </Box>
         </Box>
@@ -105,7 +128,7 @@ export default function EventCard() {
 
       <CardContent sx={{ pt: 4 }}>
         <Stack direction="row" spacing={2} alignItems="center" mb={1}>
-          <Stack direction="row" spacing={0.5} alignItems="center" mb={1}>
+          <Stack direction="row" spacing={0.5} alignItems="center">
             <AccessTimeIcon
               sx={{ fontSize: 16, color: theme.palette.secondary.main }}
             />
@@ -113,10 +136,10 @@ export default function EventCard() {
               variant="body2"
               sx={{ color: theme.palette.secondary.main }}
             >
-              19 Uhr
+              {time}
             </Typography>
           </Stack>
-          <Stack direction="row" spacing={0.5} alignItems="center" mb={1}>
+          <Stack direction="row" spacing={0.5} alignItems="center">
             <LocationOnIcon
               sx={{ fontSize: 16, color: theme.palette.secondary.main }}
             />
@@ -124,13 +147,19 @@ export default function EventCard() {
               variant="body2"
               sx={{ color: theme.palette.secondary.main }}
             >
-              Düsseldorf
+              {location}
             </Typography>
           </Stack>
         </Stack>
 
-        <Typography variant="h3" component="h3" fontWeight="bold" gutterBottom>
-          Some Event title that is very long
+        <Typography
+          variant="h3"
+          component="h3"
+          fontWeight="bold"
+          gutterBottom
+          sx={{ marginBottom: 3 }}
+        >
+          {title}
         </Typography>
 
         <Button fullWidth variant="contained" color="primary">
