@@ -1,4 +1,5 @@
 "use client";
+import { Theme } from "@emotion/react";
 import { alpha, createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -41,10 +42,12 @@ const theme = createTheme({
       fontSize: "57px",
       textTransform: "uppercase",
       fontWeight: 400,
+      marginBottom: "2rem",
     },
     h3: {
       fontSize: "32px",
       fontWeight: "bold",
+      marginBottom: "1rem",
     },
     body1: {
       fontSize: "16px",
