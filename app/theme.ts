@@ -265,10 +265,18 @@ const theme = createTheme({
           "&:first-of-type": {
             marginTop: theme.spacing(24),
           },
-          paddingTop: theme.spacing(8),
-          paddingBottom: theme.spacing(8),
-          paddingLeft: theme.spacing(32),
-          paddingRight: theme.spacing(32),
+          [theme.breakpoints.up("xs")]: {
+            padding: theme.spacing(8, 4),
+          },
+          [theme.breakpoints.up("md")]: {
+            padding: theme.spacing(8, 8),
+          },
+          [theme.breakpoints.up("lg")]: {
+            padding: theme.spacing(8, 16),
+          },
+          [theme.breakpoints.up("xl")]: {
+            padding: theme.spacing(8, 32),
+          },
         },
         "@font-face": [
           {
