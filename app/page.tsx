@@ -2,8 +2,11 @@ import EventCard from "@/components/EventCard";
 import Faqs from "@/components/Faqs";
 import Search from "@/components/Search";
 import { Box, Grid, Typography } from "@mui/material";
+import { events } from "../data/events";
+import dayjs from "dayjs";
 
 export default function Home() {
+  const today = new Date();
   return (
     <>
       <Box
@@ -33,24 +36,26 @@ export default function Home() {
           Neue Events
         </Typography>
         <Grid container spacing={6}>
-          <Grid size={4}>
-            <EventCard />
-          </Grid>
-          <Grid size={4}>
-            <EventCard />
-          </Grid>
-          <Grid size={4}>
-            <EventCard />
-          </Grid>
-          <Grid size={4}>
-            <EventCard />
-          </Grid>
-          <Grid size={4}>
-            <EventCard />
-          </Grid>
-          <Grid size={4}>
-            <EventCard />
-          </Grid>
+          {events.map(
+            (event) =>
+              dayjs(event.startDate).isAfter(dayjs(), "month") &&
+              dayjs(event.startDate).isBefore(
+                dayjs().add(3, "month"),
+                "day",
+              ) && (
+                <Grid size={4} key={event.id}>
+                  <EventCard
+                    key={event.id}
+                    title={event.title}
+                    startDate={event.startDate}
+                    location={event.location.address.city}
+                    image={event.image}
+                    imageAlt={event.imageAlt}
+                    tag={event.tags[0] ?? "Event"}
+                  />
+                </Grid>
+              ),
+          )}
         </Grid>
       </Box>
       <Box component="section" id="upcoming-events">
@@ -58,24 +63,25 @@ export default function Home() {
           Bevorstehende Events
         </Typography>
         <Grid container spacing={6}>
-          <Grid size={4}>
-            <EventCard />
-          </Grid>
-          <Grid size={4}>
-            <EventCard />
-          </Grid>
-          <Grid size={4}>
-            <EventCard />
-          </Grid>
-          <Grid size={4}>
-            <EventCard />
-          </Grid>
-          <Grid size={4}>
-            <EventCard />
-          </Grid>
-          <Grid size={4}>
-            <EventCard />
-          </Grid>
+          {events.map(
+            (event) =>
+              dayjs(event.startDate).isAfter(
+                dayjs().add(2, "month"),
+                "month",
+              ) && (
+                <Grid size={4}>
+                  <EventCard
+                    key={event.id}
+                    title={event.title}
+                    startDate={event.startDate}
+                    location={event.location.address.city}
+                    image={event.image}
+                    imageAlt={event.imageAlt}
+                    tag={event.tags[0] ?? "Event"}
+                  />
+                </Grid>
+              ),
+          )}
         </Grid>
       </Box>
       <Box component="section" id="faq">
