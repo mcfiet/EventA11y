@@ -119,6 +119,7 @@ export default function UploadField() {
       )}
 
       <input
+        id="image"
         ref={inputRef}
         type="file"
         accept="image/*"

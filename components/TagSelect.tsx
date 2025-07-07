@@ -16,6 +16,7 @@ export default function TagSelect() {
 
   return (
     <Autocomplete
+      id="tags"
       multiple // wenn du Mehrfachauswahl willst, sonst entfernen
       options={tagOptions.map((option) => option.label)}
       value={value}

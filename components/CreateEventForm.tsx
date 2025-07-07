@@ -48,7 +48,7 @@ export default function CreateEventForm() {
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <FormControl variant="standard">
             <InputLabel
-              htmlFor="bootstrap-input"
+              htmlFor="image"
               shrink
               sx={{
                 fontSize: "16px",
@@ -66,7 +66,7 @@ export default function CreateEventForm() {
           </FormControl>
           <FormControl variant="standard">
             <InputLabel
-              htmlFor="bootstrap-input"
+              htmlFor="ticket-number"
               shrink
               sx={{
                 fontSize: "16px",
@@ -78,7 +78,7 @@ export default function CreateEventForm() {
               Ticketanzahl*
             </InputLabel>
             <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-              <InputBase type="number" placeholder="2" id="bootstrap-input" />
+              <InputBase type="number" placeholder="2" id="ticket-number" />
               <Typography>Tickets</Typography>
             </Box>
           </FormControl>
@@ -86,7 +86,7 @@ export default function CreateEventForm() {
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <FormControl variant="standard">
             <InputLabel
-              htmlFor="bootstrap-input"
+              htmlFor="title"
               shrink
               sx={{
                 fontSize: "16px",
@@ -97,11 +97,11 @@ export default function CreateEventForm() {
             >
               Titel*
             </InputLabel>
-            <InputBase placeholder="Max Mustermann" id="bootstrap-input" />
+            <InputBase placeholder="Max Mustermann" id="title" />
           </FormControl>
           <FormControl variant="standard">
             <InputLabel
-              htmlFor="bootstrap-input"
+              htmlFor="short-description"
               shrink
               sx={{
                 fontSize: "16px",
@@ -117,12 +117,12 @@ export default function CreateEventForm() {
               multiline
               minRows={4}
               inputProps={{ style: { resize: "vertical" } }}
-              id="bootstrap-input"
+              id="short-description"
             />
           </FormControl>
           <FormControl variant="standard">
             <InputLabel
-              htmlFor="bootstrap-input"
+              htmlFor="name"
               shrink
               sx={{
                 fontSize: "16px",
@@ -133,11 +133,11 @@ export default function CreateEventForm() {
             >
               Name*
             </InputLabel>
-            <InputBase placeholder="Max Mustermann" id="bootstrap-input" />
+            <InputBase placeholder="Max Mustermann" id="name" />
           </FormControl>
           <FormControl variant="standard">
             <InputLabel
-              htmlFor="bootstrap-input"
+              htmlFor="address"
               shrink
               sx={{
                 fontSize: "16px",
@@ -148,12 +148,12 @@ export default function CreateEventForm() {
             >
               Straße & Hausnummer*
             </InputLabel>
-            <InputBase placeholder="Max Mustermann" id="bootstrap-input" />
+            <InputBase placeholder="Max Mustermann" id="address" />
           </FormControl>
           <Box sx={{ display: "flex", gap: 2 }}>
             <FormControl variant="standard">
               <InputLabel
-                htmlFor="bootstrap-input"
+                htmlFor="zipCode"
                 shrink
                 sx={{
                   fontSize: "16px",
@@ -164,11 +164,11 @@ export default function CreateEventForm() {
               >
                 Postleitzahl*
               </InputLabel>
-              <InputBase placeholder="Max Mustermann" id="bootstrap-input" />
+              <InputBase placeholder="Max Mustermann" id="zipCode" />
             </FormControl>
             <FormControl variant="standard">
               <InputLabel
-                htmlFor="bootstrap-input"
+                htmlFor="city"
                 shrink
                 sx={{
                   fontSize: "16px",
@@ -179,7 +179,7 @@ export default function CreateEventForm() {
               >
                 Ort*
               </InputLabel>
-              <InputBase placeholder="Max Mustermann" id="bootstrap-input" />
+              <InputBase placeholder="Max Mustermann" id="city" />
             </FormControl>
           </Box>
           <FormControlLabel
@@ -190,7 +190,28 @@ export default function CreateEventForm() {
       </Box>
       <FormControl variant="standard">
         <InputLabel
-          htmlFor="bootstrap-input"
+          htmlFor="long-description"
+          shrink
+          sx={{
+            fontSize: "16px",
+            fontWeight: 500,
+            transform: "none",
+            position: "static",
+          }}
+        >
+          Beschreibung
+        </InputLabel>
+        <InputBase
+          placeholder="Ein längerer Text zum Beschreiben"
+          multiline
+          minRows={4}
+          inputProps={{ style: { resize: "vertical" } }}
+          id="long-description"
+        />
+      </FormControl>
+      <FormControl variant="standard">
+        <InputLabel
+          htmlFor="tags"
           shrink
           sx={{
             fontSize: "16px",
@@ -202,27 +223,6 @@ export default function CreateEventForm() {
           Tags
         </InputLabel>
         <TagSelect />
-      </FormControl>
-      <FormControl variant="standard">
-        <InputLabel
-          htmlFor="bootstrap-input"
-          shrink
-          sx={{
-            fontSize: "16px",
-            fontWeight: 500,
-            transform: "none",
-            position: "static",
-          }}
-        >
-          Kurzbeschreibung
-        </InputLabel>
-        <InputBase
-          placeholder="Ein kürzerer Text zum Beschreiben"
-          multiline
-          minRows={4}
-          inputProps={{ style: { resize: "vertical" } }}
-          id="bootstrap-input"
-        />
       </FormControl>
       {/* <FormControl error variant="standard"> */}
       {/*   <InputLabel */}
