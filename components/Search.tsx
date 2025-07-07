@@ -7,9 +7,15 @@ import {
   InputAdornment,
   InputBase,
   InputLabel,
+  SxProps,
+  Theme,
 } from "@mui/material";
 
-export default function Search() {
+type SearchProps = {
+  sx?: SxProps<Theme>;
+};
+
+export default function Search({ sx }: SearchProps) {
   return (
     <Box
       component="form"
@@ -21,6 +27,7 @@ export default function Search() {
         display: "flex",
         gap: 2,
         boxShadow: 2,
+        ...sx,
       }}
     >
       <FormControl variant="standard" sx={{ width: "100%" }}>
