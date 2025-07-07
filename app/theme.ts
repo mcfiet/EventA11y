@@ -258,6 +258,16 @@ const theme = createTheme({
     },
     MuiCssBaseline: {
       styleOverrides: (theme) => ({
+        section: {
+          backgroundColor: theme.palette.custom.light_blue,
+          "&:first-of-type": {
+            marginTop: theme.spacing(24),
+          },
+          paddingTop: theme.spacing(8),
+          paddingBottom: theme.spacing(8),
+          paddingLeft: theme.spacing(32),
+          paddingRight: theme.spacing(32),
+        },
         "@font-face": [
           {
             fontFamily: "RedHatDisplay",
