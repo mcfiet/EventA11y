@@ -13,6 +13,7 @@ export default function Login() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -22,8 +23,28 @@ export default function Login() {
     },
   });
   const onSubmit = (data: LoginFormValues) => {
-    enqueueSnackbar("Erfolgreich eingeloggt", { variant: "success" });
-    router.push("/");
+    if (typeof window === "undefined") return;
+
+    const storedUsers = JSON.parse(
+      localStorage.getItem("users") || "[]",
+    ) as Array<{ username: string; password: string }>;
+    const user = storedUsers.find(
+      (u) => u.username === data.username && u.password === data.password,
+    );
+
+    if (user) {
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify({ username: user.username }),
+      );
+      enqueueSnackbar("Erfolgreich eingeloggt", { variant: "success" });
+      router.push("/");
+    } else {
+      setError("password", {
+        type: "manual",
+        message: "Ungültige Zugangsdaten",
+      });
+    }
   };
 
   return (
