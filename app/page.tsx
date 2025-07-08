@@ -1,12 +1,33 @@
-import EventCard from "@/components/EventCard";
-import Faqs from "@/components/Faqs";
-import Search from "@/components/Search";
-import { Box, Grid, Typography } from "@mui/material";
-import { events } from "../data/Events";
+"use client";
+
+import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
+import { Box } from "@mui/material";
+
+import Search, { SearchParams } from "@/components/Search";
+import Events from "@/components/Events";
+import Faqs from "@/components/Faqs";
+import { events as allEvents } from "@/data/Events";
 
 export default function Home() {
-  const today = new Date();
+  const router = useRouter();
+
+  const onSearch = ({ eventQuery, placeQuery }: SearchParams) => {
+    const params = new URLSearchParams();
+    if (eventQuery) params.set("q", eventQuery);
+    if (placeQuery) params.set("place", placeQuery);
+    router.push(`/search?${params.toString()}`);
+  };
+
+  const newEvents = allEvents.filter(
+    (evt) =>
+      dayjs(evt.startDate).isAfter(dayjs(), "month") &&
+      dayjs(evt.startDate).isBefore(dayjs().add(2, "month"), "day"),
+  );
+  const upcomingEvents = allEvents.filter((evt) =>
+    dayjs(evt.startDate).isAfter(dayjs().add(2, "month"), "month"),
+  );
+
   return (
     <>
       <Box
@@ -23,73 +44,31 @@ export default function Home() {
           component="img"
           src="/hero.png"
           alt="Event das mit einem Smartphone gefilmt wird"
-        />
-        <Search
           sx={{
-            width: "80%",
-            mt: -2,
+            width: "100%",
+            height: "40vh",
+            objectFit: "cover",
+            borderRadius: 4,
           }}
         />
+        <Search onSearch={onSearch} sx={{ width: "80%", mt: -2 }} />
       </Box>
-      <Box component="section" id="new-events">
-        <Typography component="h2" variant="h2">
-          Neue Events
-        </Typography>
-        <Grid container spacing={6}>
-          {events.map(
-            (event) =>
-              dayjs(event.startDate).isAfter(dayjs(), "month") &&
-              dayjs(event.startDate).isBefore(
-                dayjs().add(3, "month"),
-                "day",
-              ) && (
-                <Grid size={{ xs: 12, md: 6, xl: 4 }} key={event.id}>
-                  <EventCard
-                    key={event.id}
-                    id={event.id}
-                    title={event.title}
-                    startDate={event.startDate}
-                    location={event.location.address.city}
-                    image={event.image}
-                    imageAlt={event.imageAlt}
-                    tag={event.tags[0] ?? "Event"}
-                  />
-                </Grid>
-              ),
-          )}
-        </Grid>
-      </Box>
-      <Box component="section" id="upcoming-events">
-        <Typography component="h2" variant="h2">
-          Bevorstehende Events
-        </Typography>
-        <Grid container spacing={6}>
-          {events.map(
-            (event) =>
-              dayjs(event.startDate).isAfter(
-                dayjs().add(2, "month"),
-                "month",
-              ) && (
-                <Grid size={{ xs: 12, md: 6, xl: 4 }} key={event.id}>
-                  <EventCard
-                    key={event.id}
-                    id={event.id}
-                    title={event.title}
-                    startDate={event.startDate}
-                    location={event.location.address.city}
-                    image={event.image}
-                    imageAlt={event.imageAlt}
-                    tag={event.tags[0] ?? "Event"}
-                  />
-                </Grid>
-              ),
-          )}
-        </Grid>
-      </Box>
+
+      <Events
+        id="new-events"
+        title="Neue Events"
+        events={newEvents}
+        emptyMessage="In den nächsten 3 Monaten keine neuen Events."
+      />
+
+      <Events
+        id="upcoming-events"
+        title="Bevorstehende Events"
+        events={upcomingEvents}
+        emptyMessage="Keine langfristigen Events geplant."
+      />
+
       <Box component="section" id="faq">
-        <Typography component="h2" variant="h2">
-          FAQs
-        </Typography>
         <Faqs />
       </Box>
     </>
