@@ -46,6 +46,7 @@ export default function Home() {
                 <Grid size={{ xs: 12, md: 6, xl: 4 }} key={event.id}>
                   <EventCard
                     key={event.id}
+                    id={event.id}
                     title={event.title}
                     startDate={event.startDate}
                     location={event.location.address.city}
@@ -72,6 +73,7 @@ export default function Home() {
                 <Grid size={{ xs: 12, md: 6, xl: 4 }} key={event.id}>
                   <EventCard
                     key={event.id}
+                    id={event.id}
                     title={event.title}
                     startDate={event.startDate}
                     location={event.location.address.city}

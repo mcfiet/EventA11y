@@ -25,6 +25,10 @@ export default function Search({ sx }: SearchProps) {
         borderRadius: 4,
         p: 2,
         display: "flex",
+        flexDirection: {
+          xs: "column",
+          lg: "row",
+        },
         gap: 2,
         boxShadow: 2,
         ...sx,

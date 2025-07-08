@@ -16,6 +16,7 @@ import MusicNote from "@mui/icons-material/MusicNote";
 import { useTheme } from "@mui/material/styles";
 
 type EventCardProps = {
+  id: string;
   title: string;
   startDate: string;
   location: string;
@@ -25,6 +26,7 @@ type EventCardProps = {
 };
 
 export default function EventCard({
+  id,
   title,
   startDate,
   location,
@@ -155,7 +157,12 @@ export default function EventCard({
           {title}
         </Typography>
 
-        <Button fullWidth variant="contained" color="primary">
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          href={`/event/${id}`}
+        >
           Buchen
         </Button>
       </CardContent>

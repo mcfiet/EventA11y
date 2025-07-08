@@ -26,6 +26,7 @@ export default function CreateEventForm() {
         p: 4,
         borderRadius: "16px",
         boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.06);",
+        width: "100%",
       }}
     >
       {/* <FormControl disabled variant="standard"> */}
@@ -44,8 +45,21 @@ export default function CreateEventForm() {
       {/*   <InputBase placeholder="Max Mustermann" id="bootstrap-input" /> */}
       {/*   <FormHelperText>Disabled</FormHelperText> */}
       {/* </FormControl> */}
-      <Box sx={{ display: "flex", gap: 4 }}>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", lg: "row" },
+          gap: 4,
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            width: { xs: "100%", lg: "50%" },
+          }}
+        >
           <FormControl variant="standard">
             <InputLabel
               htmlFor="image"
@@ -61,9 +75,7 @@ export default function CreateEventForm() {
             </InputLabel>
             <UploadInput />
           </FormControl>
-          <FormControl variant="standard">
-            <CustomDatePickers />
-          </FormControl>
+          <CustomDatePickers />
           <FormControl variant="standard">
             <InputLabel
               htmlFor="ticket-number"

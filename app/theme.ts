@@ -46,6 +46,9 @@ const theme = createTheme(baseTheme, {
   typography: {
     h2: {
       fontSize: "57px",
+      [baseTheme.breakpoints.up("xs")]: {
+        fontSize: "42px",
+      },
       [baseTheme.breakpoints.up("sm")]: {
         fontSize: "48px",
       },
@@ -334,6 +337,7 @@ const theme = createTheme(baseTheme, {
             opacity: 1,
           },
         ".MuiPickersSectionList-root.MuiPickersInputBase-sectionsContainer": {
+          width: "100%",
           color: theme.palette.custom.black_54,
           opacity: 1,
         },

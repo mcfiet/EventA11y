@@ -17,8 +17,14 @@ export default function ContactForm() {
         boxShadow: 2,
       }}
     >
-      <Box sx={{ display: "flex", gap: 2 }}>
-        <Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          gap: 2,
+        }}
+      >
+        <Box sx={{ width: { xs: "100%", md: "50%" } }}>
           <FormControl variant="standard" fullWidth>
             <InputLabel
               htmlFor="contact-firstname"
@@ -40,7 +46,7 @@ export default function ContactForm() {
             />
           </FormControl>
         </Box>
-        <Box>
+        <Box sx={{ width: { xs: "100%", md: "50%" } }}>
           <FormControl variant="standard" fullWidth>
             <InputLabel
               htmlFor="contact-lastname"

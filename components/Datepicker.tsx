@@ -11,8 +11,24 @@ export default function CustomDatePickers() {
   const [end, setEnd] = useState<Dayjs | null>(null);
 
   return (
-    <Box display="flex" gap={4}>
-      <Box>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: {
+          xs: "column",
+          md: "row",
+        },
+      }}
+      gap={{ xs: 2, lg: 4 }}
+    >
+      <Box
+        sx={{
+          width: {
+            md: "100%",
+            lg: "50%",
+          },
+        }}
+      >
         <Typography variant="body1" fontWeight={500} mb={1}>
           Veranstaltungsstart
         </Typography>
@@ -22,6 +38,7 @@ export default function CustomDatePickers() {
           slotProps={{
             textField: {
               sx: {
+                width: "100%",
                 ".MuiPickersOutlinedInput-notchedOutline": {
                   borderRadius: "10px",
                   border: (theme) =>
@@ -39,7 +56,14 @@ export default function CustomDatePickers() {
         />
       </Box>
 
-      <Box>
+      <Box
+        sx={{
+          width: {
+            md: "100%",
+            lg: "50%",
+          },
+        }}
+      >
         <Typography variant="body1" fontWeight={500} mb={1}>
           Veranstaltungsende
         </Typography>
@@ -49,6 +73,7 @@ export default function CustomDatePickers() {
           slotProps={{
             textField: {
               sx: {
+                width: "100%",
                 ".MuiPickersOutlinedInput-notchedOutline": {
                   borderRadius: "10px",
                   border: (theme) =>

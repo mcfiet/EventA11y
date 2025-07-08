@@ -56,14 +56,20 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
   return (
     <>
       <Box component="section" sx={{ backgroundColor: "background.default" }}>
-        <Box sx={{ display: "flex", alignItems: "center" }} gap={2}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            alignItems: "center",
+          }}
+        >
           <Box
             component="img"
             src={`/${image}`}
             alt={imageAlt}
             sx={{
-              width: "50%",
-              minHeight: "50vh",
+              width: { xs: "100%", md: "50%" },
+              height: "60vh",
               objectFit: "cover",
               borderRadius: 4,
               boxShadow: 3,
@@ -72,13 +78,30 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
           <Box
             sx={{
               display: "flex",
+              flexDirection: {
+                xs: "column",
+                md: "row",
+              },
+              width: {
+                xs: "90%",
+                md: "inherit",
+              },
               backgroundColor: "background.paper",
               borderRadius: 4,
               p: 4,
-              ml: -20,
+              gap: 4,
+              ml: {
+                xs: 0,
+                md: -20,
+              },
+
+              mt: {
+                xs: -20,
+                md: 0,
+              },
             }}
           >
-            <Box sx={{ height: "auto", width: "80%" }}>
+            <Box sx={{ height: "auto", width: { xs: "100%", md: "80%" } }}>
               <Typography variant="h2" component="h1">
                 {title}
               </Typography>
@@ -89,7 +112,7 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
-                width: "20%",
+                width: { xs: "100%", md: "20%" },
               }}
             >
               <Chip
@@ -174,14 +197,21 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
         <Typography component="h2" variant="h2">
           Details
         </Typography>
-        <Box sx={{ display: "flex", gap: 4, alignItems: "start" }}>
-          <Box sx={{ width: "70%" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            gap: 4,
+            alignItems: "start",
+          }}
+        >
+          <Box sx={{ width: { xs: "100%", md: "70%" } }}>
             <Typography variant="body1">{description}</Typography>
           </Box>
           <Box
             sx={{
               display: "flex",
-              width: "30%",
+              width: { xs: "100%", md: "30%" },
               flexDirection: "column",
               gap: 2,
               backgroundColor: "background.paper",

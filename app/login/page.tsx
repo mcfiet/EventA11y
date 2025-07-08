@@ -27,7 +27,7 @@ export default function Login() {
       <Box
         component="form"
         sx={{
-          width: "50%",
+          width: { xs: "100%", md: "70%", lg: "50%" },
           display: "flex",
           flexDirection: "column",
           gap: 4,
