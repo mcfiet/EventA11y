@@ -5,13 +5,13 @@ import Search from "@/components/Search";
 import Events from "@/components/Events";
 import { events as allEvents } from "@/data/Events";
 
-export default function SearchPage({
+export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: { q?: string; place?: string };
+  searchParams: Promise<{ q?: string; place?: string }>;
 }) {
-  const eventQuery = searchParams.q ?? "";
-  const placeQuery = searchParams.place ?? "";
+  const eventQuery = (await searchParams).q ?? "";
+  const placeQuery = (await searchParams).place ?? "";
 
   const filteredEvents = allEvents.filter(
     (evt) =>
