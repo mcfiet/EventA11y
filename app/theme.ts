@@ -1,9 +1,8 @@
 "use client";
-import { Theme } from "@emotion/react";
+import { Theme } from "@mui/material/styles";
 import { alpha, createTheme } from "@mui/material/styles";
 
-const baseTheme = createTheme({});
-const theme = createTheme({
+const baseTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
@@ -40,6 +39,11 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: ["RedHatDisplay", "sans-serif"].join(","),
+  },
+});
+
+const theme = createTheme(baseTheme, {
+  typography: {
     h2: {
       fontSize: "57px",
       [baseTheme.breakpoints.up("sm")]: {
@@ -73,11 +77,18 @@ const theme = createTheme({
       },
       fontWeight: 400,
     },
+    superLarge: {
+      fontSize: "64px",
+      fontWeight: "bold",
+      lineHeight: 1,
+      color: baseTheme.palette.primary.main,
+      display: "block",
+    },
   },
   components: {
     MuiChip: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({ theme }: { theme: Theme }) => ({
           borderRadius: 8,
           fontSize: 14,
           backgroundColor: theme.palette.background.default,
@@ -88,7 +99,7 @@ const theme = createTheme({
     },
     MuiAccordion: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({ theme }: { theme: Theme }) => ({
           width: "100%",
           borderRadius: "16px",
           backgroundColor: theme.palette.background.paper,
@@ -120,7 +131,7 @@ const theme = createTheme({
     },
     MuiAccordionSummary: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({ theme }: { theme: Theme }) => ({
           padding: "20px",
           fontWeight: "bold",
           fontSize: "24px",
@@ -132,7 +143,7 @@ const theme = createTheme({
     },
     MuiAccordionDetails: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({ theme }: { theme: Theme }) => ({
           padding: theme.spacing(2),
           color: theme.palette.text.primary,
           fontSize: "15px",
@@ -141,7 +152,7 @@ const theme = createTheme({
     },
     MuiInputLabel: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({ theme }: { theme: Theme }) => ({
           fontSize: "16px",
           fontWeight: 500,
           color: theme.palette.text.primary,
@@ -155,7 +166,7 @@ const theme = createTheme({
 
     MuiInputBase: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({ theme }: { theme: Theme }) => ({
           border: `2px solid ${theme.palette.custom.black_54}`,
           borderRadius: 8,
           fontSize: 16,
@@ -177,7 +188,7 @@ const theme = createTheme({
             opacity: 1,
           },
         }),
-        input: ({ theme }) => ({
+        input: ({ theme }: { theme: Theme }) => ({
           padding: 0, // weil Padding schon außen am root
           fontSize: 16,
           "&::placeholder": {
@@ -189,7 +200,7 @@ const theme = createTheme({
     },
     MuiOutlinedInput: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({ theme }: { theme: Theme }) => ({
           borderRadius: 8,
           "& .MuiOutlinedInput-notchedOutline": {},
           "&:hover .MuiOutlinedInput-notchedOutline": { border: "none" },
@@ -200,7 +211,7 @@ const theme = createTheme({
             opacity: 1,
           },
         }),
-        input: ({ theme }) => ({
+        input: ({ theme }: { theme: Theme }) => ({
           padding: "12px",
           fontSize: 16,
           color: theme.palette.text.primary,
@@ -213,7 +224,7 @@ const theme = createTheme({
     },
     MuiFormHelperText: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({ theme }: { theme: Theme }) => ({
           marginLeft: 0,
           marginTop: "4px",
           color: theme.palette.custom.black_60,
@@ -223,7 +234,7 @@ const theme = createTheme({
     },
     MuiButton: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({ theme }: { theme: Theme }) => ({
           minWidth: "inherit",
           fontSize: "16px",
           borderRadius: "12px",
@@ -238,7 +249,7 @@ const theme = createTheme({
             backgroundColor: theme.palette.primary.dark,
           },
         }),
-        outlined: ({ theme }) => ({
+        outlined: ({ theme }: { theme: Theme }) => ({
           border: `2px solid ${theme.palette.primary.main}`,
         }),
       },
@@ -250,7 +261,7 @@ const theme = createTheme({
       variants: [
         {
           props: { color: "secondary" },
-          style: ({ theme }) => ({
+          style: ({ theme }: { theme: Theme }) => ({
             backgroundColor: theme.palette.secondary.main,
             color: theme.palette.getContrastText(theme.palette.secondary.main),
           }),
@@ -259,7 +270,7 @@ const theme = createTheme({
     },
     MuiLink: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({ theme }: { theme: Theme }) => ({
           textDecoration: "none",
           color: theme.palette.custom.primary,
           padding: 4,
@@ -289,7 +300,7 @@ const theme = createTheme({
       },
     },
     MuiCssBaseline: {
-      styleOverrides: (theme) => ({
+      styleOverrides: (theme: Theme) => ({
         section: {
           backgroundColor: theme.palette.custom.light_blue,
           "&:first-of-type": {
@@ -375,4 +386,21 @@ declare module "@mui/material/styles" {
   }
 }
 
+declare module "@mui/material/styles" {
+  interface TypographyVariants {
+    // hier definierst du die neue Variante
+    superLarge: React.CSSProperties;
+  }
+  // Optionen beim Erzeugen des Themes
+  interface TypographyVariantsOptions {
+    superLarge?: React.CSSProperties;
+  }
+}
+
+declare module "@mui/material/Typography" {
+  interface TypographyPropsVariantOverrides {
+    // damit <Typography variant="superLarge" /> erlaubt ist
+    superLarge: true;
+  }
+}
 export default theme;
