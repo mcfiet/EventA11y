@@ -29,9 +29,35 @@ export default function Registration() {
   });
 
   const onSubmit = (data: RegistrationFormValues) => {
+    if (typeof window === "undefined") return;
+
+    const existing = JSON.parse(
+      localStorage.getItem("users") || "[]",
+    ) as Array<{
+      username: string;
+      password: string;
+      firstName: string;
+      lastName: string;
+    }>;
+
+    if (existing.some((u) => u.username === data.username)) {
+      enqueueSnackbar("Benutzername existiert bereits", { variant: "error" });
+      return;
+    }
+
+    const updated = [
+      ...existing,
+      {
+        username: data.username,
+        password: data.password,
+        firstName: data.firstName,
+        lastName: data.lastName,
+      },
+    ];
+    localStorage.setItem("users", JSON.stringify(updated));
+
     enqueueSnackbar("Erfolgreich registriert!", { variant: "success" });
-    router.push("/");
-    // TODO: implement registration in backend
+    router.push("/login");
   };
 
   return (
