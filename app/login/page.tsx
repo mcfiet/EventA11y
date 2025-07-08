@@ -1,74 +1,76 @@
 "use client";
 
-import {
-  Box,
-  Button,
-  FormControl,
-  InputBase,
-  InputLabel,
-  Link,
-  Typography,
-} from "@mui/material";
+import InputField from "@/components/InputFieldLogin";
+import { LoginFormValues, loginSchema } from "@/lib/loginValidation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Box, Button, Link, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { enqueueSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
 
 export default function Login() {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
+  const onSubmit = (data: LoginFormValues) => {
+    enqueueSnackbar("Erfolgreich eingeloggt", { variant: "success" });
+    router.push("/");
+  };
+
   return (
     <Box
       component="section"
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <Typography component="h2" variant="h2">
         Login
       </Typography>
+
       <Box
         component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
         sx={{
           width: { xs: "100%", md: "70%", lg: "50%" },
           display: "flex",
           flexDirection: "column",
           gap: 4,
-          backgroundColor: (theme) => theme.palette.background.paper,
+          bgcolor: "background.paper",
           p: 4,
           borderRadius: "16px",
-          boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.06);",
+          boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.06)",
         }}
       >
-        <FormControl variant="standard">
-          <InputLabel
-            htmlFor="username"
-            shrink
-            sx={{
-              fontSize: "16px",
-              fontWeight: 500,
-              transform: "none",
-              position: "static",
-            }}
-          >
-            Name
-          </InputLabel>
-          <InputBase required placeholder="Dein Benutzername" id="username" />
-        </FormControl>
-        <FormControl variant="standard">
-          <InputLabel
-            htmlFor="password"
-            shrink
-            sx={{
-              fontSize: "16px",
-              fontWeight: 500,
-              transform: "none",
-              position: "static",
-            }}
-          >
-            Passwort
-          </InputLabel>
-          <InputBase required type="password" id="password" />
-        </FormControl>
+        <InputField
+          name="username"
+          label="Benutzername*"
+          register={register}
+          error={errors.username?.message}
+          placeholder="Dein Benutzername"
+        />
+
+        <InputField
+          name="password"
+          label="Passwort*"
+          register={register}
+          error={errors.password?.message}
+          type="password"
+        />
+
         <Link href="/registration">Kein Account? Jetzt registrieren.</Link>
-        <Button sx={{ ml: "auto" }}>Einloggen</Button>
+
+        <Button type="submit" disabled={isSubmitting} sx={{ ml: "auto" }}>
+          Einloggen
+        </Button>
       </Box>
     </Box>
   );
