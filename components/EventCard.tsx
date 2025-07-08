@@ -101,14 +101,7 @@ export default function EventCard({
               p: 1,
             }}
           >
-            <Typography
-              fontWeight="bold"
-              sx={{
-                lineHeight: 1,
-                fontSize: 64,
-                color: theme.palette.primary.main,
-              }}
-            >
+            <Typography fontWeight="bold" variant="superLarge">
               {day}
             </Typography>
             <Typography
