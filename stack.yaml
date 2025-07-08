@@ -1,6 +1,6 @@
 services:
   app:
-    image: ghcr.io/mcfiet/eventa11y-website:${GIT_COMMIT_HASH:-latest}
+    image: ghcr.io/mcfiet/eventa11y:${GIT_COMMIT_HASH:-latest}
     networks:
       - frontend
     ports:

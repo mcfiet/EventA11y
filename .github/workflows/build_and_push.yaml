@@ -72,4 +72,4 @@ jobs:
           GIT_COMMIT_HASH: ${{ github.sha }}
         run: |
           ssh-keyscan -H "87.106.232.205" >> ~/.ssh/known_hosts
-          docker stack deploy -c stack.yaml --with-registry-auth eventa11y-website
+          docker stack deploy -c stack.yaml --with-registry-auth eventa11y
