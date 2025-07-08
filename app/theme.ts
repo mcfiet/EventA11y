@@ -75,6 +75,17 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiChip: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          borderRadius: 8,
+          fontSize: 14,
+          backgroundColor: theme.palette.background.default,
+          color: theme.palette.secondary.main,
+          border: `1px solid ${theme.palette.secondary.main}`,
+        }),
+      },
+    },
     MuiAccordion: {
       styleOverrides: {
         root: ({ theme }) => ({
