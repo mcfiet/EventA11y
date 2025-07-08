@@ -2,6 +2,7 @@
 import { Theme } from "@emotion/react";
 import { alpha, createTheme } from "@mui/material/styles";
 
+const baseTheme = createTheme({});
 const theme = createTheme({
   palette: {
     mode: "light",
@@ -41,17 +42,35 @@ const theme = createTheme({
     fontFamily: ["RedHatDisplay", "sans-serif"].join(","),
     h2: {
       fontSize: "57px",
+      [baseTheme.breakpoints.up("sm")]: {
+        fontSize: "48px",
+      },
+      [baseTheme.breakpoints.up("md")]: {
+        fontSize: "57px",
+      },
       textTransform: "uppercase",
       fontWeight: 400,
       marginBottom: "2rem",
     },
     h3: {
       fontSize: "32px",
+      [baseTheme.breakpoints.up("sm")]: {
+        fontSize: "28px",
+      },
+      [baseTheme.breakpoints.up("md")]: {
+        fontSize: "32px",
+      },
       fontWeight: "bold",
       marginBottom: "1rem",
     },
     body1: {
       fontSize: "16px",
+      [baseTheme.breakpoints.up("sm")]: {
+        fontSize: "15px",
+      },
+      [baseTheme.breakpoints.up("md")]: {
+        fontSize: "16px",
+      },
       fontWeight: 400,
     },
   },
