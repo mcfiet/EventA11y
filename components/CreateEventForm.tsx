@@ -17,9 +17,7 @@ import { useSnackbar } from "notistack";
 import UploadInput from "./UploadInput";
 import TagSelect from "./TagSelect";
 import { eventSchema, EventFormValues } from "@/lib/eventValidation";
-import { DatePicker } from "@mui/x-date-pickers";
-import dayjs from "dayjs";
-import InputField from "./InputField";
+import InputField from "./InputFieldEvent";
 import DatePickerField from "./Datepicker";
 
 export default function CreateEventForm() {

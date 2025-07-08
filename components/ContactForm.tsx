@@ -1,11 +1,41 @@
 "use client";
 
-import { Box, FormControl, InputLabel, InputBase, Button } from "@mui/material";
+import React from "react";
+import { Box, Button, FormControl, FormHelperText } from "@mui/material";
+import { useForm, Controller, Path } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { enqueueSnackbar, useSnackbar } from "notistack";
+import { ContactFormValues, contactSchema } from "@/lib/contactValidation";
+import InputField from "./InputFieldContact";
+import { useRouter } from "next/navigation";
 
 export default function ContactForm() {
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormValues>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      message: "",
+    },
+  });
+
+  const onSubmit = (data: ContactFormValues) => {
+    enqueueSnackbar("Nachricht gesendet!", { variant: "success" });
+    router.push("/");
+  };
+
   return (
     <Box
       component="form"
+      onSubmit={handleSubmit(onSubmit)}
       noValidate
       sx={{
         display: "flex",
@@ -25,120 +55,62 @@ export default function ContactForm() {
         }}
       >
         <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-          <FormControl variant="standard" fullWidth>
-            <InputLabel
-              htmlFor="contact-firstname"
-              shrink
-              sx={{
-                fontSize: "16px",
-                fontWeight: 500,
-                transform: "none",
-                position: "static",
-              }}
-            >
-              Vorname
-            </InputLabel>
-            <InputBase
-              required
-              id="contact-firstname"
-              placeholder="Max"
-              aria-label="Vorname"
-            />
-          </FormControl>
+          <InputField
+            name="firstName"
+            label="Vorname*"
+            register={register}
+            error={errors.firstName?.message}
+            placeholder="Max"
+          />
         </Box>
         <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-          <FormControl variant="standard" fullWidth>
-            <InputLabel
-              htmlFor="contact-lastname"
-              shrink
-              sx={{
-                fontSize: "16px",
-                fontWeight: 500,
-                transform: "none",
-                position: "static",
-              }}
-            >
-              Nachname
-            </InputLabel>
-            <InputBase
-              required
-              id="contact-lastname"
-              placeholder="Mustermann"
-              aria-label="Nachname"
-            />
-          </FormControl>
+          <InputField
+            name="lastName"
+            label="Nachname*"
+            register={register}
+            error={errors.lastName?.message}
+            placeholder="Mustermann"
+          />
         </Box>
       </Box>
 
-      <FormControl variant="standard" fullWidth>
-        <InputLabel
-          htmlFor="contact-email"
-          shrink
-          sx={{
-            fontSize: "16px",
-            fontWeight: 500,
-            transform: "none",
-            position: "static",
-          }}
-        >
-          E-Mail
-        </InputLabel>
-        <InputBase
-          required
-          type="email"
-          id="contact-email"
-          placeholder="maxmustermann@mustermail.de"
-          aria-label="E-Mail-Adresse"
-        />
-      </FormControl>
+      <InputField
+        name="email"
+        label="E-Mail*"
+        register={register}
+        error={errors.email?.message}
+        placeholder="maxmustermann@mustermail.de"
+        type="email"
+      />
 
-      <FormControl variant="standard" fullWidth>
-        <InputLabel
-          htmlFor="contact-phone"
-          shrink
-          sx={{
-            fontSize: "16px",
-            fontWeight: 500,
-            transform: "none",
-            position: "static",
-          }}
-        >
-          Telefon
-        </InputLabel>
-        <InputBase
-          id="contact-phone"
-          type="tel"
-          placeholder="012345621"
-          aria-label="Telefon"
-        />
-      </FormControl>
+      <InputField
+        name="phone"
+        label="Telefon"
+        register={register}
+        error={errors.phone?.message}
+        placeholder="012345621"
+        type="tel"
+      />
 
-      <FormControl variant="standard" fullWidth>
-        <InputLabel
-          htmlFor="contact-message"
-          shrink
-          sx={{
-            fontSize: "16px",
-            fontWeight: 500,
-            transform: "none",
-            position: "static",
-          }}
-        >
-          Nachricht
-        </InputLabel>
-        <InputBase
-          id="contact-message"
-          placeholder="Schreiben Sie uns eine Nachricht"
-          aria-label="Nachricht"
-          multiline
-          minRows={5}
-          inputProps={{ style: { resize: "vertical" } }}
-        />
-      </FormControl>
+      <InputField
+        name="message"
+        label="Nachricht*"
+        register={register}
+        error={errors.message?.message}
+        placeholder="Schreiben Sie uns eine Nachricht"
+        multiline
+        minRows={5}
+      />
 
-      <Button type="submit" sx={{ alignSelf: "flex-end" }}>
-        Senden
-      </Button>
+      <FormControl variant="standard" error={false} fullWidth>
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          sx={{ alignSelf: "flex-end" }}
+        >
+          Senden
+        </Button>
+      </FormControl>
     </Box>
   );
 }
