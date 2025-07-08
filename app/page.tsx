@@ -2,7 +2,7 @@ import EventCard from "@/components/EventCard";
 import Faqs from "@/components/Faqs";
 import Search from "@/components/Search";
 import { Box, Grid, Typography } from "@mui/material";
-import { events } from "../data/events";
+import { events } from "../data/Events";
 import dayjs from "dayjs";
 
 export default function Home() {
@@ -43,7 +43,7 @@ export default function Home() {
                 dayjs().add(3, "month"),
                 "day",
               ) && (
-                <Grid size={4} key={event.id}>
+                <Grid size={{ xs: 12, md: 6, xl: 4 }} key={event.id}>
                   <EventCard
                     key={event.id}
                     title={event.title}
@@ -69,7 +69,7 @@ export default function Home() {
                 dayjs().add(2, "month"),
                 "month",
               ) && (
-                <Grid size={4}>
+                <Grid size={{ xs: 12, md: 6, xl: 4 }} key={event.id}>
                   <EventCard
                     key={event.id}
                     title={event.title}
