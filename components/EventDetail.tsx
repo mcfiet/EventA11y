@@ -29,11 +29,9 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
     description,
     descriptionShort,
     startDate,
-    endDate,
     location,
     image,
     imageAlt,
-    url,
     tags,
     ticketNumber,
     accessible,
@@ -119,16 +117,7 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
                   p: 1,
                 }}
               >
-                <Typography
-                  fontWeight="bold"
-                  sx={{
-                    lineHeight: 1,
-                    fontSize: {
-                      xs: 64,
-                    },
-                    color: "primary.main",
-                  }}
-                >
+                <Typography fontWeight="bold" variant="superLarge">
                   {day}
                 </Typography>
                 <Typography
@@ -206,6 +195,7 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
             <Box
               component="img"
               src="/img/maps.png"
+              alt="Standort des Events auf der Karte"
               sx={{ height: 300, objectFit: "cover", borderRadius: 2 }}
             />
             <Button>Auf Google Maps ansehen</Button>
