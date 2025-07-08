@@ -1,23 +1,64 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import {
   Box,
+  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
-  InputBase,
+  FormHelperText,
   InputLabel,
-  Typography,
 } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useSnackbar } from "notistack";
 import UploadInput from "./UploadInput";
-import CustomDatePickers from "./Datepicker";
 import TagSelect from "./TagSelect";
+import { eventSchema, EventFormValues } from "@/lib/eventValidation";
+import { DatePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
+import InputField from "./InputField";
+import DatePickerField from "./Datepicker";
 
 export default function CreateEventForm() {
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<EventFormValues>({
+    resolver: zodResolver(eventSchema),
+    defaultValues: {
+      title: "",
+      startDate: null,
+      endDate: null,
+      ticketNumber: 0,
+      locationName: "",
+      street: "",
+      postalCode: "",
+      city: "",
+      accessible: false,
+      shortDescription: "",
+      longDescription: "",
+      tags: [],
+      image: null,
+    },
+  });
+
+  const onSubmit = (data: EventFormValues) => {
+    enqueueSnackbar("Event erstellt!", { variant: "success" });
+    router.push("/");
+  };
+
   return (
     <Box
       component="form"
+      onSubmit={handleSubmit(onSubmit)}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -29,22 +70,6 @@ export default function CreateEventForm() {
         width: "100%",
       }}
     >
-      {/* <FormControl disabled variant="standard"> */}
-      {/*   <InputLabel */}
-      {/*     htmlFor="bootstrap-input" */}
-      {/*     shrink */}
-      {/*     sx={{ */}
-      {/*       fontSize: "16px", */}
-      {/*       fontWeight: 500, */}
-      {/*       transform: "none", */}
-      {/*       position: "static", */}
-      {/*     }} */}
-      {/*   > */}
-      {/*     Titel* */}
-      {/*   </InputLabel> */}
-      {/*   <InputBase placeholder="Max Mustermann" id="bootstrap-input" /> */}
-      {/*   <FormHelperText>Disabled</FormHelperText> */}
-      {/* </FormControl> */}
       <Box
         sx={{
           display: "flex",
@@ -58,9 +83,10 @@ export default function CreateEventForm() {
             flexDirection: "column",
             gap: 2,
             width: { xs: "100%", lg: "50%" },
+            mb: "auto",
           }}
         >
-          <FormControl variant="standard">
+          <FormControl error={!!errors.image} variant="standard">
             <InputLabel
               htmlFor="image"
               shrink
@@ -75,124 +101,75 @@ export default function CreateEventForm() {
             </InputLabel>
             <UploadInput />
           </FormControl>
-          <CustomDatePickers />
-          <FormControl variant="standard">
-            <InputLabel
-              htmlFor="ticket-number"
-              shrink
-              sx={{
-                fontSize: "16px",
-                fontWeight: 500,
-                transform: "none",
-                position: "static",
-              }}
-            >
-              Ticketanzahl*
-            </InputLabel>
-            <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-              <InputBase type="number" placeholder="2" id="ticket-number" />
-              <Typography>Tickets</Typography>
-            </Box>
-          </FormControl>
+
+          <DatePickerField
+            name="startDate"
+            label="Startdatum"
+            control={control}
+            error={errors.startDate?.message}
+          />
+          <DatePickerField
+            name="endDate"
+            label="Enddatum"
+            control={control}
+            error={errors.endDate?.message}
+          />
+
+          <InputField
+            name="ticketNumber"
+            label="Ticketanzahl"
+            placeholder="2"
+            register={register}
+            error={errors.ticketNumber?.message}
+            type="number"
+          />
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          <FormControl variant="standard">
-            <InputLabel
-              htmlFor="title"
-              shrink
-              sx={{
-                fontSize: "16px",
-                fontWeight: 500,
-                transform: "none",
-                position: "static",
-              }}
-            >
-              Titel*
-            </InputLabel>
-            <InputBase placeholder="Ein toller Titel" id="title" />
-          </FormControl>
-          <FormControl variant="standard">
-            <InputLabel
-              htmlFor="short-description"
-              shrink
-              sx={{
-                fontSize: "16px",
-                fontWeight: 500,
-                transform: "none",
-                position: "static",
-              }}
-            >
-              Kurzbeschreibung
-            </InputLabel>
-            <InputBase
-              placeholder="Ein kürzerer Text zum Beschreiben"
-              multiline
-              minRows={4}
-              inputProps={{ style: { resize: "vertical" } }}
-              id="short-description"
-            />
-          </FormControl>
-          <FormControl variant="standard">
-            <InputLabel
-              htmlFor="location-name"
-              shrink
-              sx={{
-                fontSize: "16px",
-                fontWeight: 500,
-                transform: "none",
-                position: "static",
-              }}
-            >
-              Location Name*
-            </InputLabel>
-            <InputBase placeholder="Musterfirma" id="location-name" />
-          </FormControl>
-          <FormControl variant="standard">
-            <InputLabel
-              htmlFor="address"
-              shrink
-              sx={{
-                fontSize: "16px",
-                fontWeight: 500,
-                transform: "none",
-                position: "static",
-              }}
-            >
-              Straße & Hausnummer*
-            </InputLabel>
-            <InputBase placeholder="Musterstraße 1a" id="address" />
-          </FormControl>
+          <InputField
+            name="title"
+            label="Titel*"
+            placeholder="Ein toller Titel"
+            register={register}
+            error={errors.title?.message}
+          />
+          <InputField
+            name="shortDescription"
+            label="Kurzbeschreibung"
+            placeholder="Ein kürzerer Text zum Beschreiben"
+            register={register}
+            error={errors.shortDescription?.message}
+            multiline
+            minRows={4}
+          />
+          <InputField
+            name="locationName"
+            label="Location Name*"
+            placeholder="Musterfirma"
+            register={register}
+            error={errors.locationName?.message}
+          />
+          <InputField
+            name="street"
+            label="Straße & Hausnummer*"
+            placeholder="Musterstraße 1a"
+            register={register}
+            error={errors.street?.message}
+          />
           <Box sx={{ display: "flex", gap: 2 }}>
-            <FormControl variant="standard">
-              <InputLabel
-                htmlFor="zipCode"
-                shrink
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 500,
-                  transform: "none",
-                  position: "static",
-                }}
-              >
-                Postleitzahl*
-              </InputLabel>
-              <InputBase placeholder="12345" id="zipCode" />
-            </FormControl>
-            <FormControl variant="standard">
-              <InputLabel
-                htmlFor="city"
-                shrink
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 500,
-                  transform: "none",
-                  position: "static",
-                }}
-              >
-                Ort*
-              </InputLabel>
-              <InputBase placeholder="Musterort" id="city" />
-            </FormControl>
+            <InputField
+              name="postalCode"
+              label="Postleitzahl*"
+              placeholder="12345"
+              register={register}
+              error={errors.postalCode?.message}
+            />
+            <InputField
+              name="city"
+              label="Ort*"
+              placeholder="Musterort"
+              register={register}
+              error={errors.city?.message}
+            />
           </Box>
           <FormControlLabel
             control={<Checkbox defaultChecked />}
@@ -200,27 +177,15 @@ export default function CreateEventForm() {
           />
         </Box>
       </Box>
-      <FormControl variant="standard">
-        <InputLabel
-          htmlFor="long-description"
-          shrink
-          sx={{
-            fontSize: "16px",
-            fontWeight: 500,
-            transform: "none",
-            position: "static",
-          }}
-        >
-          Beschreibung
-        </InputLabel>
-        <InputBase
-          placeholder="Ein längerer Text zum Beschreiben"
-          multiline
-          minRows={4}
-          inputProps={{ style: { resize: "vertical" } }}
-          id="long-description"
-        />
-      </FormControl>
+      <InputField
+        name="longDescription"
+        label="Beschreibung"
+        placeholder="Ein längerer Text zum Beschreiben"
+        register={register}
+        error={errors.longDescription?.message}
+        multiline
+        minRows={4}
+      />
       <FormControl variant="standard">
         <InputLabel
           htmlFor="tags"
@@ -236,26 +201,7 @@ export default function CreateEventForm() {
         </InputLabel>
         <TagSelect />
       </FormControl>
-      {/* <FormControl error variant="standard"> */}
-      {/*   <InputLabel */}
-      {/*     htmlFor="bootstrap-input" */}
-      {/*     shrink */}
-      {/*     sx={{ */}
-      {/*       fontSize: "16px", */}
-      {/*       fontWeight: 500, */}
-      {/*       transform: "none", */}
-      {/*       position: "static", */}
-      {/*     }} */}
-      {/*   > */}
-      {/*     Titel* */}
-      {/*   </InputLabel> */}
-      {/*   <InputBase */}
-      {/*     id="component-error" */}
-      {/*     placeholder="Max Mustermann" */}
-      {/*     aria-describedby="component-error-text" */}
-      {/*   /> */}
-      {/*   <FormHelperText id="component-error-text">Error</FormHelperText> */}
-      {/* </FormControl> */}
+      <Button type="submit">Event erstellen</Button>
     </Box>
   );
 }

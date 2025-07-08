@@ -1,95 +1,65 @@
-"use client";
+import { EventFormValues } from "@/lib/eventValidation";
+import { FormControl, InputLabel, FormHelperText } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
+import { useForm, Controller } from "react-hook-form";
 
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Box, Typography } from "@mui/material";
-import { useState } from "react";
-import { Dayjs } from "dayjs";
-import theme from "@/app/theme";
+type DateKeys = "startDate" | "endDate";
+interface DatePickerFieldProps {
+  name: DateKeys;
+  label: string;
+  control: ReturnType<typeof useForm<EventFormValues>>["control"];
+  error?: string;
+}
 
-export default function CustomDatePickers() {
-  const [start, setStart] = useState<Dayjs | null>(null);
-  const [end, setEnd] = useState<Dayjs | null>(null);
-
+export default function DatePickerField({
+  name,
+  label,
+  control,
+  error,
+}: DatePickerFieldProps) {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: {
-          xs: "column",
-          md: "row",
-        },
-      }}
-      gap={{ xs: 2, lg: 4 }}
-    >
-      <Box
+    <FormControl variant="standard" error={!!error} sx={{ flex: 1 }}>
+      <InputLabel
+        shrink
+        htmlFor={name}
         sx={{
-          width: {
-            md: "100%",
-            lg: "50%",
-          },
+          fontSize: 16,
+          fontWeight: 500,
+          transform: "none",
+          position: "static",
         }}
       >
-        <Typography variant="body1" fontWeight={500} mb={1}>
-          Veranstaltungsstart
-        </Typography>
-        <DatePicker
-          value={start}
-          onChange={(newValue) => setStart(newValue)}
-          slotProps={{
-            textField: {
-              sx: {
-                width: "100%",
-                ".MuiPickersOutlinedInput-notchedOutline": {
-                  borderRadius: "10px",
-                  border: (theme) =>
-                    `2px solid ${theme.palette.custom.black_54}`,
-                  p: 2,
+        {label}
+      </InputLabel>
+      <Controller<EventFormValues, DateKeys>
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <DatePicker
+            value={field.value ? dayjs(field.value as Date) : null}
+            onChange={(newVal) => field.onChange(newVal?.toDate() ?? null)}
+            slotProps={{
+              textField: {
+                id: name,
+                sx: {
+                  width: "100%",
+                  ".MuiPickersOutlinedInput-notchedOutline": {
+                    borderRadius: "10px",
+                    border: (theme) =>
+                      `2px solid ${theme.palette.custom.black_54}`,
+                    p: 2,
+                  },
                 },
               },
-            },
-            openPickerButton: {
-              sx: {
-                color: theme.palette.primary.main,
+              openPickerButton: {
+                sx: { color: (theme) => theme.palette.primary.main },
               },
-            },
-          }}
-        />
-      </Box>
-
-      <Box
-        sx={{
-          width: {
-            md: "100%",
-            lg: "50%",
-          },
-        }}
-      >
-        <Typography variant="body1" fontWeight={500} mb={1}>
-          Veranstaltungsende
-        </Typography>
-        <DatePicker
-          value={end}
-          onChange={(newValue) => setStart(newValue)}
-          slotProps={{
-            textField: {
-              sx: {
-                width: "100%",
-                ".MuiPickersOutlinedInput-notchedOutline": {
-                  borderRadius: "10px",
-                  border: (theme) =>
-                    `2px solid ${theme.palette.custom.black_54}`,
-                  p: 2,
-                },
-              },
-            },
-            openPickerButton: {
-              sx: {
-                color: theme.palette.primary.main,
-              },
-            },
-          }}
-        />
-      </Box>
-    </Box>
+            }}
+          />
+        )}
+      />
+      <FormHelperText>{error}</FormHelperText>
+    </FormControl>
   );
 }
