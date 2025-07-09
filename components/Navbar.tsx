@@ -37,9 +37,14 @@ export function Navbar() {
 
   // Focus first item on open
   useEffect(() => {
-    if (menuToggled && firstMenuItemRef.current) {
-      firstMenuItemRef.current.focus();
+    if (menuToggled) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
     }
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [menuToggled]);
 
   // ESC to close menu (only on mobile)
