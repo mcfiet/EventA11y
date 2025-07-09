@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -16,6 +16,7 @@ import { enqueueSnackbar } from "notistack";
 import InputField from "./InputFieldBooking";
 import { useRouter } from "next/navigation";
 import { BookingFormValues } from "@/lib/bookingValidation";
+import BookingConfirmation from "./BookingConfirmation";
 
 interface BookingFormProps {
   eventTitle: string;
@@ -27,6 +28,9 @@ const BookingForm: React.FC<BookingFormProps> = ({
   maxTickets,
 }) => {
   const router = useRouter();
+  const [confirmation, setConfirmation] = useState<BookingFormValues | null>(
+    null,
+  );
 
   const {
     control,
@@ -44,10 +48,21 @@ const BookingForm: React.FC<BookingFormProps> = ({
   });
 
   const onSubmit = (data: BookingFormValues) => {
+    setConfirmation(data);
     enqueueSnackbar("Buchung gesendet!", { variant: "success" });
-    router.push("/");
   };
 
+  if (confirmation) {
+    return (
+      <BookingConfirmation
+        eventTitle={eventTitle}
+        firstName={confirmation.firstName}
+        lastName={confirmation.lastName}
+        email={confirmation.email}
+        ticketCount={confirmation.ticketCount}
+      />
+    );
+  }
   return (
     <Box
       component="form"
