@@ -183,6 +183,19 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
                     {location.address.city}
                   </Typography>
                 </Stack>
+                <Stack
+                  direction="row"
+                  spacing={0.5}
+                  alignItems="center"
+                  width="100%"
+                >
+                  {accessible && (
+                    <Chip
+                      icon={<AccessibilityNewIcon />}
+                      label="Barrierefrei"
+                    />
+                  )}
+                </Stack>
               </Stack>
               <Button>Buchen</Button>
               <Typography variant="body2" color="primary">
@@ -233,9 +246,6 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
               {tags.map((tag) => (
                 <Chip key={tag} label={tag} />
               ))}
-              {accessible && (
-                <Chip icon={<AccessibilityNewIcon />} label="Barrierefrei" />
-              )}
             </Box>
           </Box>
         </Box>
