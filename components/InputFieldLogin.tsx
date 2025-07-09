@@ -30,7 +30,7 @@ export default function InputField({
   placeholder,
 }: InputFieldProps) {
   return (
-    <FormControl variant="standard" error={!!error}>
+    <FormControl variant="standard" error={!!error} fullWidth>
       <InputLabel
         shrink
         htmlFor={String(name)}

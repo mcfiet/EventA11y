@@ -29,7 +29,7 @@ export default function InputFieldBooking({
   placeholder,
 }: InputFieldBookingProps) {
   return (
-    <FormControl variant="standard" error={!!error}>
+    <FormControl variant="standard" error={!!error} fullWidth>
       <InputLabel
         shrink
         htmlFor={String(name)}
