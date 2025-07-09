@@ -105,6 +105,15 @@ export default function Registration() {
             />
           </Box>
         </Box>
+
+        <InputField
+          name="username"
+          label="Benutzername*"
+          register={register}
+          error={errors.username?.message}
+          placeholder="Dein Benutzername"
+        />
+
         <InputFieldPassword
           name="password"
           label="Passwort*"
@@ -119,6 +128,7 @@ export default function Registration() {
           error={errors.passwordConfirm?.message}
           placeholder="Mind. 8 Zeichen"
         />
+
         <Link href="/login">Du hast schon ein Konto? Jetzt einloggen.</Link>
 
         <Button type="submit" disabled={isSubmitting} sx={{ ml: "auto" }}>
