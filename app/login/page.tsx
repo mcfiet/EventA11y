@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../AuthContext";
+import InputFieldPassword from "@/components/InputFieldPassword";
 
 export default function Login() {
   const router = useRouter();
@@ -78,12 +79,12 @@ export default function Login() {
           placeholder="Dein Benutzername"
         />
 
-        <InputField
+        <InputFieldPassword
           name="password"
           label="Passwort*"
           register={register}
           error={errors.password?.message}
-          type="password"
+          placeholder="Mind. 8 Zeichen"
         />
 
         <Link href="/registration">Kein Account? Jetzt registrieren.</Link>
