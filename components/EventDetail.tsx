@@ -197,7 +197,7 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
                   )}
                 </Stack>
               </Stack>
-              <Button>Buchen</Button>
+              <Button href={`/event/book/${event.id}`}>Buchen</Button>
               <Typography variant="body2" color="primary">
                 Noch {ticketNumber} verfügbar
               </Typography>
