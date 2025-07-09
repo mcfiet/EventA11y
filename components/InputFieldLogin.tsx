@@ -1,4 +1,5 @@
 import { LoginFormValues } from "@/lib/loginValidation";
+import { RegistrationFormValues } from "@/lib/registrationValidation";
 import {
   FormControl,
   InputLabel,

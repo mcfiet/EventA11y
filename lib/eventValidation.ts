@@ -20,8 +20,10 @@ export const eventSchema = z
     tags: z.array(z.string()).min(1, "Mindestens ein Tag auswählen"),
     image: z
       .instanceof(File, { message: "Bild muss eine Datei sein" })
-      .nullable()
       .optional(),
+  })
+  .refine((file) => file !== undefined, {
+    message: "Bild ist erforderlich",
   })
   .refine(
     (data) =>

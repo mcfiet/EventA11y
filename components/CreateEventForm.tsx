@@ -27,7 +27,7 @@ export default function CreateEventForm() {
     register,
     control,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<EventFormValues>({
     resolver: zodResolver(eventSchema),
     defaultValues: {
@@ -43,11 +43,12 @@ export default function CreateEventForm() {
       shortDescription: "",
       longDescription: "",
       tags: [],
-      image: null,
+      image: undefined,
     },
   });
 
   const onSubmit = (data: EventFormValues) => {
+    console.log("submit");
     enqueueSnackbar("Event erstellt!", { variant: "success" });
     router.push("/");
   };
@@ -56,6 +57,7 @@ export default function CreateEventForm() {
     <Box
       component="form"
       onSubmit={handleSubmit(onSubmit)}
+      noValidate
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -96,7 +98,19 @@ export default function CreateEventForm() {
             >
               Bild
             </InputLabel>
-            <UploadInput />
+
+            <Controller
+              name="image"
+              control={control}
+              render={({ field }) => (
+                <UploadInput
+                  value={field.value}
+                  onFileChangeAction={field.onChange}
+                  error={!!errors.image}
+                  helperText={errors.image?.message as string}
+                />
+              )}
+            />
           </FormControl>
 
           <DatePickerField
@@ -168,9 +182,15 @@ export default function CreateEventForm() {
               error={errors.city?.message}
             />
           </Box>
-          <FormControlLabel
-            control={<Checkbox defaultChecked />}
-            label="Barrierefrei"
+          <Controller
+            name="accessible"
+            control={control}
+            render={({ field }) => (
+              <FormControlLabel
+                control={<Checkbox {...field} checked={field.value} />}
+                label="Barrierefrei"
+              />
+            )}
           />
         </Box>
       </Box>
@@ -183,7 +203,7 @@ export default function CreateEventForm() {
         multiline
         minRows={4}
       />
-      <FormControl variant="standard">
+      <FormControl variant="standard" error={!!errors.tags}>
         <InputLabel
           htmlFor="tags"
           shrink
@@ -196,7 +216,19 @@ export default function CreateEventForm() {
         >
           Tags
         </InputLabel>
-        <TagSelect />
+
+        <Controller
+          name="tags"
+          control={control}
+          render={({ field }) => (
+            <TagSelect
+              value={field.value}
+              onChange={(_evt, newValue) => field.onChange(newValue)}
+              error={!!errors.tags}
+              helperText={errors.tags?.message as string}
+            />
+          )}
+        />
       </FormControl>
       <Button type="submit">Event erstellen</Button>
     </Box>

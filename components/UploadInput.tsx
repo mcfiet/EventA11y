@@ -1,10 +1,10 @@
 "use client";
 
-import { Box, Typography, IconButton, Button, Stack } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
+import { Box, Typography, IconButton, Stack } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CloseIcon from "@mui/icons-material/Close";
-import { ChangeEvent, useRef, useState } from "react";
 
 const UploadContainer = styled(Box)(({ theme }) => ({
   border: `2px solid ${theme.palette.custom.black_54}`,
@@ -28,40 +28,54 @@ const UploadContainer = styled(Box)(({ theme }) => ({
   },
 }));
 
-export default function UploadField() {
+export interface UploadInputProps {
+  value: File | null | undefined;
+  onFileChangeAction: (file: File | null) => void;
+  error?: boolean;
+  helperText?: string;
+}
+
+export default function UploadInput({
+  value,
+  onFileChangeAction,
+  error = false,
+  helperText = "",
+}: UploadInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  const handleClick = () => {
-    inputRef.current?.click();
-  };
+  // whenever `value` changes, (re)generate preview URL
+  useEffect(() => {
+    if (value) {
+      const url = URL.createObjectURL(value);
+      setPreviewUrl(url);
+      return () => {
+        URL.revokeObjectURL(url);
+      };
+    } else {
+      setPreviewUrl(null);
+    }
+  }, [value]);
 
+  const handleClick = () => inputRef.current?.click();
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       handleClick();
     }
   };
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      const url = URL.createObjectURL(selectedFile);
-      setPreviewUrl(url);
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    onFileChangeAction(file);
   };
-
   const handleReset = () => {
-    setFile(null);
-    setPreviewUrl(null);
-    inputRef.current!.value = "";
+    onFileChangeAction(null);
+    if (inputRef.current) inputRef.current.value = "";
   };
 
   return (
     <Box>
-      {file ? (
+      {value ? (
         <Box
           display="flex"
           alignItems="center"
@@ -89,10 +103,10 @@ export default function UploadField() {
           )}
           <Stack>
             <Typography variant="body2" fontWeight={500}>
-              {file.name}
+              {value.name}
             </Typography>
             <Typography variant="caption" color="text.secondary">
-              {(file.size / 1024).toFixed(1)} KB
+              {(value.size / 1024).toFixed(1)} KB
             </Typography>
           </Stack>
           <IconButton
@@ -126,6 +140,12 @@ export default function UploadField() {
         hidden
         onChange={handleChange}
       />
+
+      {error && (
+        <Typography variant="caption" color="error" sx={{ mt: 1 }}>
+          {helperText}
+        </Typography>
+      )}
     </Box>
   );
 }

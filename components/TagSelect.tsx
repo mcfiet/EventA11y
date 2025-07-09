@@ -1,32 +1,36 @@
 "use client";
 
-import { Autocomplete, Box, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { Autocomplete, TextField } from "@mui/material";
 
-const tagOptions = [
-  { label: "Design" },
-  { label: "Marketing" },
-  { label: "Entwicklung" },
-  { label: "UX" },
-  { label: "Forschung" },
-];
+const tagOptions = ["Design", "Marketing", "Entwicklung", "UX", "Forschung"];
 
-export default function TagSelect() {
-  const [value, setValue] = useState<string[]>([]);
+interface TagSelectProps {
+  value: string[];
+  onChange: (event: any, newValue: string[]) => void;
+  error?: boolean;
+  helperText?: string;
+}
 
+export default function TagSelect({
+  value,
+  onChange,
+  error = false,
+  helperText = "",
+}: TagSelectProps) {
   return (
     <Autocomplete
-      id="tags"
-      multiple // wenn du Mehrfachauswahl willst, sonst entfernen
-      options={tagOptions.map((option) => option.label)}
+      multiple
+      options={tagOptions}
       value={value}
-      onChange={(_, newValue) => setValue(newValue)}
+      onChange={onChange}
       renderInput={(params) => (
         <TextField
           {...params}
           placeholder="Tags auswählen oder erstellen"
           variant="outlined"
           fullWidth
+          error={error}
+          helperText={helperText}
         />
       )}
     />
