@@ -23,7 +23,8 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   { name: "Home", href: "/" },
-  { name: "Events", href: "/#events" },
+  { name: "Neue Events", href: "/#new-events" },
+  { name: "Kommende Events", href: "/#upcoming-events" },
 ];
 
 export function Navbar() {

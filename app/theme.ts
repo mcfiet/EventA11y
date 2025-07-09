@@ -47,7 +47,7 @@ const theme = createTheme(baseTheme, {
     h2: {
       fontSize: "57px",
       [baseTheme.breakpoints.up("xs")]: {
-        fontSize: "42px",
+        fontSize: "38px",
       },
       [baseTheme.breakpoints.up("sm")]: {
         fontSize: "48px",
@@ -304,6 +304,9 @@ const theme = createTheme(baseTheme, {
     },
     MuiCssBaseline: {
       styleOverrides: (theme: Theme) => ({
+        "[id]": {
+          scrollMarginTop: "72px",
+        },
         section: {
           backgroundColor: theme.palette.custom.light_blue,
           "&:first-of-type": {
