@@ -202,7 +202,7 @@ export function Navbar() {
               </Link>
             </Box>
           )}
-          <Box component="li" key="login">
+          <Box component="li" key="kontakt">
             <Button href="/kontakt" component="a" tabIndex={0}>
               Kontakt
             </Button>
