@@ -26,13 +26,31 @@ const Footer: React.FC = () => {
           spacing={{ xs: 1, sm: 4 }}
           alignItems="center"
         >
-          <Link href="#" underline="none" color="text.primary" variant="body2">
+          <Link href="/" underline="none" color="text.primary" variant="body2">
             Startseite
           </Link>
-          <Link href="#" underline="none" color="text.primary" variant="body2">
-            Events
+          <Link
+            href="/#new-events"
+            underline="none"
+            color="text.primary"
+            variant="body2"
+          >
+            Neue Events
           </Link>
-          <Link href="#" underline="none" color="text.primary" variant="body2">
+          <Link
+            href="/#upcoming-events"
+            underline="none"
+            color="text.primary"
+            variant="body2"
+          >
+            Kommende Events
+          </Link>
+          <Link
+            href="/login"
+            underline="none"
+            color="text.primary"
+            variant="body2"
+          >
             Login
           </Link>
           <Link href="#" underline="none" color="text.primary" variant="body2">
