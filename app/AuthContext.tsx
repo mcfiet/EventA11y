@@ -17,6 +17,7 @@ interface AuthContextType {
   currentUser: User | null;
   login: (user: User) => void;
   logout: () => void;
+  isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -25,6 +26,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -36,6 +38,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
           setCurrentUser(null);
         }
       }
+      setIsLoading(false);
     }
   }, []);
 
@@ -50,7 +53,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, login, logout }}>
+    <AuthContext.Provider value={{ currentUser, login, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
