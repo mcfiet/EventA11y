@@ -3,14 +3,14 @@
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import { Box } from "@mui/material";
-
 import Search, { SearchParams } from "@/components/Search";
 import Events from "@/components/Events";
 import Faqs from "@/components/Faqs";
-import { events as allEvents } from "@/data/Events";
+import { useEvents } from "./EventsProvider";
 
 export default function Home() {
   const router = useRouter();
+  const { events } = useEvents();
 
   const onSearch = ({ eventQuery, placeQuery }: SearchParams) => {
     const params = new URLSearchParams();
@@ -19,12 +19,12 @@ export default function Home() {
     router.push(`/search?${params.toString()}`);
   };
 
-  const newEvents = allEvents.filter(
+  const newEvents = events.filter(
     (evt) =>
       dayjs(evt.startDate).isAfter(dayjs(), "month") &&
       dayjs(evt.startDate).isBefore(dayjs().add(2, "month"), "day"),
   );
-  const upcomingEvents = allEvents.filter((evt) =>
+  const upcomingEvents = events.filter((evt) =>
     dayjs(evt.startDate).isAfter(dayjs().add(2, "month"), "month"),
   );
 

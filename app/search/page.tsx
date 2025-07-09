@@ -1,18 +1,20 @@
 "use client";
 import { Box } from "@mui/material";
-
 import Search from "@/components/Search";
 import Events from "@/components/Events";
-import { events as allEvents } from "@/data/Events";
+import { useEvents } from "@/app/EventsProvider";
+import { useSearchParams } from "next/navigation";
 
-export default async function SearchPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ q?: string; place?: string }>;
-}) {
-  const eventQuery = (await searchParams).q ?? "";
-  const placeQuery = (await searchParams).place ?? "";
+export default function SearchPage() {
+  // Nutze next/navigation, um URL-Query-Parameter im Client auszulesen:
+  const params = useSearchParams();
+  const eventQuery = params.get("q") ?? "";
+  const placeQuery = params.get("place") ?? "";
 
+  // Events aus Context (LocalStorage/Provider)
+  const { events: allEvents } = useEvents();
+
+  // Filter-Logik wie gehabt
   const filteredEvents = allEvents.filter(
     (evt) =>
       evt.title.toLowerCase().includes(eventQuery.toLowerCase()) &&

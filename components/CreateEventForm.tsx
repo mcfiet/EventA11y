@@ -18,10 +18,13 @@ import TagSelect from "./TagSelect";
 import { eventSchema, EventFormValues } from "@/lib/eventValidation";
 import InputField from "./InputFieldEvent";
 import DatePickerField from "./Datepicker";
+import { useEvents } from "@/app/EventsProvider";
+import Event from "@/types/Event";
 
 export default function CreateEventForm() {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
+  const { addEvent } = useEvents();
 
   const {
     register,
@@ -32,8 +35,8 @@ export default function CreateEventForm() {
     resolver: zodResolver(eventSchema),
     defaultValues: {
       title: "",
-      startDate: null,
-      endDate: null,
+      startDate: new Date(),
+      endDate: new Date(),
       ticketNumber: 0,
       locationName: "",
       street: "",
@@ -44,13 +47,31 @@ export default function CreateEventForm() {
       longDescription: "",
       tags: [],
       image: undefined,
+      imageAlt: "",
     },
   });
 
   const onSubmit = (data: EventFormValues) => {
-    console.log("submit");
-    enqueueSnackbar("Event erstellt!", { variant: "success" });
-    router.push("/");
+    let imageUrl = "img/events/placeholder.png";
+
+    const newEvent: Event = {
+      ...data,
+      id: Date.now().toString(),
+      imageUrl,
+      imageAlt:
+        "Platzhalterbild: In dieser Anwendung können keine echten Bilder hochgeladen werden",
+      location: {
+        name: data.locationName,
+        address: {
+          street: data.street,
+          postalCode: data.postalCode,
+          city: data.city,
+        },
+      },
+    };
+    addEvent(newEvent);
+    enqueueSnackbar("Event temporär erstellt!", { variant: "success" });
+    router.push(`/event/${newEvent.id}`);
   };
 
   return (
@@ -112,6 +133,14 @@ export default function CreateEventForm() {
               )}
             />
           </FormControl>
+
+          <InputField
+            name="imageAlt"
+            label="Alternativer Text Bild"
+            placeholder="Ein gut beschreibener alternativer Text"
+            register={register}
+            error={errors.imageAlt?.message}
+          />
 
           <DatePickerField
             name="startDate"

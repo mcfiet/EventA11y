@@ -18,7 +18,7 @@ import { useTheme } from "@mui/material/styles";
 type EventCardProps = {
   id: string;
   title: string;
-  startDate: string;
+  startDate: Date;
   location: string;
   image: string;
   imageAlt: string;

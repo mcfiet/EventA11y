@@ -1,20 +1,20 @@
 import { Address } from "./Address";
+import type { EventFormValues } from "@/lib/eventValidation";
 
 export default interface Event {
   id: string;
+  imageUrl: string;
   title: string;
-  description: string;
-  descriptionShort: string;
-  startDate: string;
-  endDate: string;
+  longDescription?: string;
+  shortDescription: string;
+  startDate: Date;
+  endDate: Date;
   location: {
     name: string;
     address: Address;
   };
-  image: string;
   imageAlt: string;
-  url: string;
-  tags: string[];
+  tags?: string[];
   ticketNumber: number;
   accessible: boolean;
 }

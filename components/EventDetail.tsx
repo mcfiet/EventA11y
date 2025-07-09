@@ -1,36 +1,36 @@
+"use client";
+
 import React from "react";
-import {
-  Box,
-  Grid,
-  Typography,
-  Chip,
-  Button,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Link as MuiLink,
-  Stack,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Box, Typography, Chip, Button, Stack } from "@mui/material";
 import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { MusicNote } from "@mui/icons-material";
 import Event from "../types/Event";
-import theme from "@/app/theme";
+import { useEvents } from "@/app/EventsProvider";
+import { notFound } from "next/navigation";
 
 interface EventDetailPageProps {
-  event: Event;
+  eventId: string;
 }
 
-const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
+const EventDetailPage: React.FC<EventDetailPageProps> = ({ eventId }) => {
+  const { events } = useEvents();
+
+  const event = events.find((e: Event) => e.id === eventId);
+
+  if (!event) {
+    notFound();
+  }
+
   const {
+    id,
     title,
-    description,
-    descriptionShort,
+    longDescription,
+    shortDescription,
     startDate,
     location,
-    image,
+    imageUrl,
     imageAlt,
     tags,
     ticketNumber,
@@ -65,7 +65,7 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
         >
           <Box
             component="img"
-            src={`/${image}`}
+            src={`/${imageUrl}`}
             alt={imageAlt}
             sx={{
               width: { xs: "100%", md: "50%" },
@@ -105,7 +105,7 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
               <Typography variant="h2" component="h1">
                 {title}
               </Typography>
-              <Typography variant="body1">{descriptionShort}</Typography>
+              <Typography variant="body1">{shortDescription}</Typography>
             </Box>
             <Box
               sx={{
@@ -116,7 +116,7 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
               }}
             >
               <Chip
-                label={event.tags[0] ?? "Event"}
+                label={tags && (tags[0] ?? "Event")}
                 sx={{
                   height: "auto",
                   backgroundColor: "background.paper",
@@ -197,7 +197,7 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
                   )}
                 </Stack>
               </Stack>
-              <Button href={`/event/book/${event.id}`}>Buchen</Button>
+              <Button href={`/event/book/${id}`}>Buchen</Button>
               <Typography variant="body2" color="primary">
                 Noch {ticketNumber} verfügbar
               </Typography>
@@ -219,7 +219,7 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
           }}
         >
           <Box sx={{ width: { xs: "100%", md: "70%" } }}>
-            <Typography variant="body1">{description}</Typography>
+            <Typography variant="body1">{longDescription}</Typography>
           </Box>
           <Box
             sx={{
@@ -243,9 +243,7 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ event }) => {
             />
             <Button>Auf Google Maps ansehen</Button>
             <Box display="flex" gap={1}>
-              {tags.map((tag) => (
-                <Chip key={tag} label={tag} />
-              ))}
+              {tags && tags.map((tag) => <Chip key={tag} label={tag} />)}
             </Box>
           </Box>
         </Box>

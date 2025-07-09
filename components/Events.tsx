@@ -31,9 +31,9 @@ export default function Events({
                 title={event.title}
                 startDate={event.startDate}
                 location={event.location.address.city}
-                image={event.image}
+                image={event.imageUrl}
                 imageAlt={event.imageAlt}
-                tag={event.tags[0] ?? "Event"}
+                tag={event.tags ? event.tags[0] : "Event"}
               />
             </Grid>
           ))}
