@@ -166,7 +166,7 @@ export function Navbar() {
             <>
               <Box component="li" key="createEvent">
                 <Link
-                  href="/create-event"
+                  href="/event/create"
                   {...("create-event" === pathname && {
                     "aria-current": "page",
                   })}

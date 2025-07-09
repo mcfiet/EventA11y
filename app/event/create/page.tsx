@@ -7,18 +7,18 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/AuthContext";
 
 export default function CreateEvent() {
-  const { currentUser } = useAuth();
+  const { currentUser, isLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!currentUser) {
-      router.push("/login"); // redirect to login if not logged in
+    if (!isLoading && !currentUser) {
+      router.push("/login");
     }
-  }, [currentUser, router]);
+  }, [currentUser, isLoading, router]);
 
-  if (!currentUser) {
-    return null;
-  }
+  if (isLoading) return null;
+  if (!currentUser) return null;
+
   return (
     <Box
       component="section"
