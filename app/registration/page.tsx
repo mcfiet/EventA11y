@@ -1,5 +1,6 @@
 "use client";
 
+import InputFieldPassword from "@/components/InputFieldPassword";
 import InputField from "@/components/InputFieldRegistration";
 import {
   RegistrationFormValues,
@@ -104,31 +105,20 @@ export default function Registration() {
             />
           </Box>
         </Box>
-
-        <InputField
-          name="username"
-          label="Benutzername*"
-          register={register}
-          error={errors.username?.message}
-          placeholder="Dein Benutzername"
-        />
-
-        <InputField
+        <InputFieldPassword
           name="password"
           label="Passwort*"
           register={register}
           error={errors.password?.message}
-          type="password"
+          placeholder="Mind. 8 Zeichen"
         />
-
-        <InputField
+        <InputFieldPassword
           name="passwordConfirm"
           label="Passwort wiederholen*"
           register={register}
           error={errors.passwordConfirm?.message}
-          type="password"
+          placeholder="Mind. 8 Zeichen"
         />
-
         <Link href="/login">Du hast schon ein Konto? Jetzt einloggen.</Link>
 
         <Button type="submit" disabled={isSubmitting} sx={{ ml: "auto" }}>
