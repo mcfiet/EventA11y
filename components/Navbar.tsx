@@ -28,7 +28,7 @@ const menuItems: MenuItem[] = [
 ];
 
 export function Navbar() {
-  const { currentUser, login, logout } = useAuth();
+  const { currentUser, logout } = useAuth();
   const theme = useTheme();
   const pathname = usePathname();
   const firstMenuItemRef = useRef<HTMLAnchorElement>(null);

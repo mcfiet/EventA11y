@@ -52,7 +52,7 @@ export default function CreateEventForm() {
   });
 
   const onSubmit = (data: EventFormValues) => {
-    let imageUrl = "img/events/placeholder.png";
+    const imageUrl = "img/events/placeholder.png";
 
     const newEvent: Event = {
       ...data,

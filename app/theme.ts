@@ -134,7 +134,7 @@ const theme = createTheme(baseTheme, {
     },
     MuiAccordionSummary: {
       styleOverrides: {
-        root: ({ theme }: { theme: Theme }) => ({
+        root: () => ({
           padding: "20px",
           fontWeight: "bold",
           fontSize: "24px",
@@ -379,7 +379,6 @@ const theme = createTheme(baseTheme, {
   },
 });
 
-// Type-Erweiterung für custom-Farben
 declare module "@mui/material/styles" {
   interface Palette {
     custom: {
@@ -395,10 +394,8 @@ declare module "@mui/material/styles" {
 
 declare module "@mui/material/styles" {
   interface TypographyVariants {
-    // hier definierst du die neue Variante
     superLarge: React.CSSProperties;
   }
-  // Optionen beim Erzeugen des Themes
   interface TypographyVariantsOptions {
     superLarge?: React.CSSProperties;
   }
@@ -406,7 +403,6 @@ declare module "@mui/material/styles" {
 
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
-    // damit <Typography variant="superLarge" /> erlaubt ist
     superLarge: true;
   }
 }

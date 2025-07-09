@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import { events } from "@/data/Events";
-import EventDetailPage from "@/components/EventDetail";
 import Event from "@/types/Event";
 import BookingForm from "@/components/BookingForm";
 import { Box } from "@mui/material";

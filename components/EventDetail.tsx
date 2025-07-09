@@ -46,13 +46,7 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ eventId }) => {
     hour: "2-digit",
     minute: "2-digit",
   });
-  const formatDate = (iso: string) => {
-    return dateObj.toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
+
   return (
     <>
       <Box component="section" sx={{ backgroundColor: "background.default" }}>

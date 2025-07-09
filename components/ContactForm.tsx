@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { Box, Button, FormControl, FormHelperText } from "@mui/material";
-import { useForm, Controller, Path } from "react-hook-form";
+import { Box, Button, FormControl } from "@mui/material";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { enqueueSnackbar, useSnackbar } from "notistack";
+import { enqueueSnackbar } from "notistack";
 import { ContactFormValues, contactSchema } from "@/lib/contactValidation";
 import InputField from "./InputFieldContact";
 import { useRouter } from "next/navigation";
@@ -27,7 +27,7 @@ export default function ContactForm() {
     },
   });
 
-  const onSubmit = (data: ContactFormValues) => {
+  const onSubmit = () => {
     enqueueSnackbar("Nachricht gesendet!", { variant: "success" });
     router.push("/");
   };

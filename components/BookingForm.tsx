@@ -14,7 +14,6 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { enqueueSnackbar } from "notistack";
 import InputField from "./InputFieldBooking";
-import { useRouter } from "next/navigation";
 import { BookingFormValues } from "@/lib/bookingValidation";
 import BookingConfirmation from "./BookingConfirmation";
 
@@ -27,7 +26,6 @@ const BookingForm: React.FC<BookingFormProps> = ({
   eventTitle,
   maxTickets,
 }) => {
-  const router = useRouter();
   const [confirmation, setConfirmation] = useState<BookingFormValues | null>(
     null,
   );

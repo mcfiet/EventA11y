@@ -12,7 +12,7 @@ import InputFieldPassword from "@/components/InputFieldPassword";
 
 export default function Login() {
   const router = useRouter();
-  const { login, currentUser, logout } = useAuth();
+  const { login } = useAuth();
   const {
     register,
     handleSubmit,
