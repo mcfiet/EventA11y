@@ -7,9 +7,11 @@ import { Box, Button, Link, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../AuthContext";
 
 export default function Login() {
   const router = useRouter();
+  const { login, currentUser, logout } = useAuth();
   const {
     register,
     handleSubmit,
@@ -33,10 +35,7 @@ export default function Login() {
     );
 
     if (user) {
-      localStorage.setItem(
-        "currentUser",
-        JSON.stringify({ username: user.username }),
-      );
+      login({ username: user.username, email: "" });
       enqueueSnackbar("Erfolgreich eingeloggt", { variant: "success" });
       router.push("/");
     } else {

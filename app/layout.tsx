@@ -8,6 +8,7 @@ import { Navbar } from "@/components/Navbar";
 import SkipLinks from "@/components/SkipLinks";
 import DateProvider from "@/components/DateProvider";
 import Providers from "./Providers";
+import { AuthProvider } from "./AuthContext";
 
 export const metadata: Metadata = {
   title: "EventA11y - Book Events accessible",
@@ -26,12 +27,14 @@ export default function RootLayout({
           <ThemeProvider theme={theme}>
             <DateProvider>
               <Providers>
-                <CssBaseline />
-                <SkipLinks />
-                <Navbar />
-                <Box component="main" id="main">
-                  {children}
-                </Box>
+                <AuthProvider>
+                  <CssBaseline />
+                  <SkipLinks />
+                  <Navbar />
+                  <Box component="main" id="main">
+                    {children}
+                  </Box>
+                </AuthProvider>
               </Providers>
             </DateProvider>
           </ThemeProvider>

@@ -14,6 +14,7 @@ import { usePathname } from "next/navigation";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useRef, useState } from "react";
+import { useAuth } from "@/app/AuthContext";
 
 interface MenuItem {
   name: string;
@@ -23,12 +24,10 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   { name: "Home", href: "/" },
   { name: "Events", href: "/#events" },
-  { name: "Login", href: "/login" },
-  { name: "Event erstellen", href: "/create-event" },
-  { name: "Kontakt", href: "/contact" },
 ];
 
 export function Navbar() {
+  const { currentUser, login, logout } = useAuth();
   const theme = useTheme();
   const pathname = usePathname();
   const firstMenuItemRef = useRef<HTMLAnchorElement>(null);
@@ -144,25 +143,69 @@ export function Navbar() {
         >
           {menuItems.map((item, i) => (
             <Box component="li" key={item.name}>
-              {i === menuItems.length - 1 ? (
-                <Button href="/kontakt" component="a" tabIndex={0}>
-                  {item.name}
-                </Button>
-              ) : (
+              <Link
+                href={item.href}
+                {...(item.href === pathname && { "aria-current": "page" })}
+                ref={i === 0 ? firstMenuItemRef : null}
+                tabIndex={0}
+                sx={{
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {item.name}
+              </Link>
+            </Box>
+          ))}
+          {currentUser ? (
+            <>
+              <Box component="li" key="createEvent">
                 <Link
-                  href={item.href}
-                  {...(item.href === pathname && { "aria-current": "page" })}
-                  ref={i === 0 ? firstMenuItemRef : null}
+                  href="/create-event"
+                  {...("create-event" === pathname && {
+                    "aria-current": "page",
+                  })}
                   tabIndex={0}
                   sx={{
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {item.name}
+                  Event erstellen
                 </Link>
-              )}
+              </Box>
+              <Box component="li" key="logout">
+                <Link
+                  onClick={() => {
+                    logout();
+                    window.location.href = "/";
+                  }}
+                  tabIndex={0}
+                  sx={{
+                    whiteSpace: "nowrap",
+                    cursor: "pointer",
+                  }}
+                >
+                  Logout
+                </Link>
+              </Box>
+            </>
+          ) : (
+            <Box component="li" key="login">
+              <Link
+                href="/login"
+                tabIndex={0}
+                sx={{
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Login
+              </Link>
             </Box>
-          ))}
+          )}
+          <Box component="li" key="login">
+            <Button href="/kontakt" component="a" tabIndex={0}>
+              Kontakt
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>
