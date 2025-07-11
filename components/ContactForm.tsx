@@ -8,6 +8,7 @@ import { enqueueSnackbar } from "notistack";
 import { ContactFormValues, contactSchema } from "@/lib/contactValidation";
 import InputField from "./InputFieldContact";
 import { useRouter } from "next/navigation";
+import FormLegend from "./FormLegend";
 
 export default function ContactForm() {
   const router = useRouter();
@@ -47,6 +48,7 @@ export default function ContactForm() {
         boxShadow: 2,
       }}
     >
+      <FormLegend text="Um die Kontaktabfrage abzuschicken, klicke den Button unten mit der Beschriftung 'Senden'" />
       <Box
         sx={{
           display: "flex",
@@ -61,6 +63,7 @@ export default function ContactForm() {
             register={register}
             error={errors.firstName?.message}
             placeholder="Max"
+            autocomplete="first-name"
           />
         </Box>
         <Box sx={{ width: { xs: "100%", md: "50%" } }}>
@@ -70,6 +73,7 @@ export default function ContactForm() {
             register={register}
             error={errors.lastName?.message}
             placeholder="Mustermann"
+            autocomplete="family-name"
           />
         </Box>
       </Box>
@@ -81,15 +85,17 @@ export default function ContactForm() {
         error={errors.email?.message}
         placeholder="maxmustermann@mustermail.de"
         type="email"
+        autocomplete="email"
       />
 
       <InputField
         name="phone"
-        label="Telefon"
+        label="Telefon (optional)"
         register={register}
         error={errors.phone?.message}
         placeholder="012345621"
         type="tel"
+        autocomplete="tel"
       />
 
       <InputField

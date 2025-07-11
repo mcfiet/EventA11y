@@ -16,6 +16,7 @@ import { enqueueSnackbar } from "notistack";
 import InputField from "./InputFieldBooking";
 import { BookingFormValues } from "@/lib/bookingValidation";
 import BookingConfirmation from "./BookingConfirmation";
+import FormLegend from "./FormLegend";
 
 interface BookingFormProps {
   eventTitle: string;
@@ -78,6 +79,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
         margin: "0 auto",
       }}
     >
+      <FormLegend text="Um die Buchung abzuschicken, klicke den Button unten mit der Beschriftung 'Buchung abschicken'" />
       <Typography variant="h3" fontWeight="bold" mb={2}>
         Tickets buchen für: <br />
         <span style={{ color: "#84234f" }}>{eventTitle}</span>
@@ -97,6 +99,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
             register={register}
             error={errors.firstName?.message}
             placeholder="Max"
+            autocomplete="first-name"
           />
         </Box>
         <Box sx={{ width: { xs: "100%", md: "50%" } }}>
@@ -106,6 +109,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
             register={register}
             error={errors.lastName?.message}
             placeholder="Mustermann"
+            autocomplete="family-name"
           />
         </Box>
       </Box>
@@ -117,6 +121,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
         error={errors.email?.message}
         placeholder="maxmustermann@mustermail.de"
         type="email"
+        autocomplete="email"
       />
 
       <FormControl

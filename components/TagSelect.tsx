@@ -5,7 +5,7 @@ import { Autocomplete, TextField } from "@mui/material";
 const tagOptions = ["Design", "Marketing", "Entwicklung", "UX", "Forschung"];
 
 interface TagSelectProps {
-  value: string[];
+  value: string[] | undefined;
   onChange: (event: any, newValue: string[]) => void;
   error?: boolean;
   helperText?: string;

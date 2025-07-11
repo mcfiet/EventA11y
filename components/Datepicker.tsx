@@ -37,7 +37,6 @@ export default function DatePickerField({
         control={control}
         render={({ field }) => (
           <DatePicker
-            value={field.value ? dayjs(field.value as Date) : null}
             onChange={(newVal) => field.onChange(newVal?.toDate() ?? null)}
             slotProps={{
               textField: {

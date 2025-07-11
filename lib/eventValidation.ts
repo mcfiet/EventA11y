@@ -15,7 +15,7 @@ export const eventSchema = z
     accessible: z.boolean(),
     shortDescription: z.string().min(1, "Kurze Beschreibung ist erforderlich"),
     longDescription: z.string().optional(),
-    tags: z.array(z.string()).min(1, "Mindestens ein Tag auswählen"),
+    tags: z.array(z.string()).optional(),
     image: z
       .instanceof(File, { message: "Bild muss eine Datei sein" })
       .refine((file) => file !== undefined, {
@@ -23,13 +23,9 @@ export const eventSchema = z
       }),
     imageAlt: z.string().min(1, "Alternativtext für das Bild ist erforderlich"),
   })
-  .refine(
-    (data) =>
-      !data.startDate || !data.endDate || data.endDate >= data.startDate,
-    {
-      message: "Enddatum muss am oder nach dem Startdatum sein",
-      path: ["endDate"],
-    },
-  );
+  .refine((data) => data.endDate >= data.startDate, {
+    message: "Enddatum muss am oder nach dem Startdatum sein",
+    path: ["endDate"],
+  });
 
 export type EventFormValues = z.infer<typeof eventSchema>;

@@ -16,6 +16,7 @@ interface InputFieldBookingProps {
   multiline?: boolean;
   minRows?: number;
   placeholder?: string;
+  autocomplete?: string;
 }
 
 export default function InputFieldBooking({
@@ -27,6 +28,7 @@ export default function InputFieldBooking({
   multiline = false,
   minRows,
   placeholder,
+  autocomplete,
 }: InputFieldBookingProps) {
   return (
     <FormControl variant="standard" error={!!error} fullWidth>
@@ -50,6 +52,7 @@ export default function InputFieldBooking({
         minRows={minRows}
         placeholder={placeholder}
         inputProps={multiline ? { style: { resize: "vertical" } } : undefined}
+        autoComplete={autocomplete}
       />
       <FormHelperText>{error}</FormHelperText>
     </FormControl>

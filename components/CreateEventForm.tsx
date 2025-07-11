@@ -20,6 +20,7 @@ import InputField from "./InputFieldEvent";
 import DatePickerField from "./Datepicker";
 import { useEvents } from "@/app/EventsProvider";
 import Event from "@/types/Event";
+import FormLegend from "./FormLegend";
 
 export default function CreateEventForm() {
   const router = useRouter();
@@ -35,8 +36,8 @@ export default function CreateEventForm() {
     resolver: zodResolver(eventSchema),
     defaultValues: {
       title: "",
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: undefined,
+      endDate: undefined,
       ticketNumber: 0,
       locationName: "",
       street: "",
@@ -90,6 +91,7 @@ export default function CreateEventForm() {
         width: "100%",
       }}
     >
+      <FormLegend text="Um das Event zu erstellen, klicke den Button unten mit der Beschriftung 'Event erstellen'" />
       <Box
         sx={{
           display: "flex",
@@ -106,7 +108,7 @@ export default function CreateEventForm() {
             mb: "auto",
           }}
         >
-          <FormControl error={!!errors.image} variant="standard">
+          <FormControl required error={!!errors.image} variant="standard">
             <InputLabel
               htmlFor="image"
               shrink
@@ -135,6 +137,7 @@ export default function CreateEventForm() {
           </FormControl>
 
           <InputField
+            required
             name="imageAlt"
             label="Alternativer Text Bild"
             placeholder="Ein gut beschreibener alternativer Text"
@@ -144,18 +147,19 @@ export default function CreateEventForm() {
 
           <DatePickerField
             name="startDate"
-            label="Startdatum"
+            label="Startdatum*"
             control={control}
             error={errors.startDate?.message}
           />
           <DatePickerField
             name="endDate"
-            label="Enddatum"
+            label="Enddatum*"
             control={control}
             error={errors.endDate?.message}
           />
 
           <InputField
+            required
             name="ticketNumber"
             label="Ticketanzahl"
             placeholder="2"
@@ -166,13 +170,15 @@ export default function CreateEventForm() {
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <InputField
+            required
             name="title"
-            label="Titel*"
+            label="Titel"
             placeholder="Ein toller Titel"
             register={register}
             error={errors.title?.message}
           />
           <InputField
+            required
             name="shortDescription"
             label="Kurzbeschreibung"
             placeholder="Ein kürzerer Text zum Beschreiben"
@@ -182,30 +188,34 @@ export default function CreateEventForm() {
             minRows={4}
           />
           <InputField
+            required
             name="locationName"
-            label="Location Name*"
+            label="Location Name"
             placeholder="Musterfirma"
             register={register}
             error={errors.locationName?.message}
           />
           <InputField
+            required
             name="street"
-            label="Straße & Hausnummer*"
+            label="Straße & Hausnummer"
             placeholder="Musterstraße 1a"
             register={register}
             error={errors.street?.message}
           />
           <Box sx={{ display: "flex", gap: 2 }}>
             <InputField
+              required
               name="postalCode"
-              label="Postleitzahl*"
+              label="Postleitzahl"
               placeholder="12345"
               register={register}
               error={errors.postalCode?.message}
             />
             <InputField
+              required
               name="city"
-              label="Ort*"
+              label="Ort"
               placeholder="Musterort"
               register={register}
               error={errors.city?.message}
@@ -217,7 +227,7 @@ export default function CreateEventForm() {
             render={({ field }) => (
               <FormControlLabel
                 control={<Checkbox {...field} checked={field.value} />}
-                label="Barrierefrei"
+                label="Barrierefrei (optional)"
               />
             )}
           />
@@ -225,7 +235,7 @@ export default function CreateEventForm() {
       </Box>
       <InputField
         name="longDescription"
-        label="Beschreibung"
+        label="Beschreibung (optional)"
         placeholder="Ein längerer Text zum Beschreiben"
         register={register}
         error={errors.longDescription?.message}
@@ -243,7 +253,7 @@ export default function CreateEventForm() {
             position: "static",
           }}
         >
-          Tags
+          Tags (optional)
         </InputLabel>
 
         <Controller

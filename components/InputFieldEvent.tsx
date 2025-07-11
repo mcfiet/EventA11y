@@ -16,6 +16,7 @@ interface InputFieldProps {
   multiline?: boolean;
   minRows?: number;
   placeholder?: string;
+  required?: boolean;
 }
 
 export default function InputField({
@@ -27,9 +28,15 @@ export default function InputField({
   multiline = false,
   minRows,
   placeholder,
+  required,
 }: InputFieldProps) {
   return (
-    <FormControl variant="standard" error={!!error} fullWidth>
+    <FormControl
+      required={required}
+      variant="standard"
+      error={!!error}
+      fullWidth
+    >
       <InputLabel
         shrink
         htmlFor={String(name)}
