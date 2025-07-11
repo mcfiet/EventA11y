@@ -1,7 +1,7 @@
 "use client";
 
 import CreateEventForm from "@/components/CreateEventForm";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/AuthContext";
@@ -24,10 +24,14 @@ export default function CreateEvent() {
       component="section"
       sx={{
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
+      <Typography component="h2" variant="h2">
+        Event erstellen
+      </Typography>
       <CreateEventForm />
     </Box>
   );
