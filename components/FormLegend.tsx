@@ -16,6 +16,7 @@ export default function FormLegend({ text }: FormLegendProps) {
         bgcolor: "grey.100",
         borderRadius: 1,
       }}
+      component="legend"
     >
       <Typography
         variant="subtitle1"

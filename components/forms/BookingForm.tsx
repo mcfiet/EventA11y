@@ -9,15 +9,15 @@ import { BookingFormValues, bookingSchema } from "@/lib/bookingValidation";
 import BookingConfirmation from "../BookingConfirmation";
 import FormLegend from "../FormLegend";
 import { zodResolver } from "@hookform/resolvers/zod";
+import BookingReview from "../BookingReview"; // NEU
 
 interface BookingFormProps {
   eventTitle: string;
 }
 
 const BookingForm: React.FC<BookingFormProps> = ({ eventTitle }) => {
-  const [confirmation, setConfirmation] = useState<BookingFormValues | null>(
-    null,
-  );
+  const [step, setStep] = useState<"form" | "review" | "confirmation">("form");
+  const [formData, setFormData] = useState<BookingFormValues | null>(null);
 
   const {
     register,
@@ -35,18 +35,40 @@ const BookingForm: React.FC<BookingFormProps> = ({ eventTitle }) => {
   });
 
   const onSubmit = (data: BookingFormValues) => {
-    setConfirmation(data);
-    enqueueSnackbar("Buchung gesendet!", { variant: "success" });
+    setFormData(data);
+    setStep("review");
   };
 
-  if (confirmation) {
+  const handleConfirm = () => {
+    if (formData) {
+      enqueueSnackbar("Buchung gesendet!", { variant: "success" });
+      setStep("confirmation");
+    }
+  };
+
+  const handleEdit = () => {
+    setStep("form");
+  };
+
+  if (step === "confirmation" && formData) {
     return (
       <BookingConfirmation
         eventTitle={eventTitle}
-        firstName={confirmation.firstName}
-        lastName={confirmation.lastName}
-        email={confirmation.email}
-        ticketCount={confirmation.ticketCount}
+        firstName={formData.firstName}
+        lastName={formData.lastName}
+        email={formData.email}
+        ticketCount={formData.ticketCount}
+      />
+    );
+  }
+
+  if (step === "review" && formData) {
+    return (
+      <BookingReview
+        eventTitle={eventTitle}
+        data={formData}
+        onEdit={handleEdit}
+        onConfirm={handleConfirm}
       />
     );
   }
@@ -141,7 +163,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ eventTitle }) => {
           disabled={isSubmitting}
           sx={{ alignSelf: "flex-end" }}
         >
-          Buchung abschicken
+          Buchungszusammenfassung ansehen
         </Button>
       </FormControl>
     </Box>
