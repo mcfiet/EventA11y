@@ -47,6 +47,8 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ eventId }) => {
     minute: "2-digit",
   });
 
+  const isPlaceholder = imageUrl === "img/events/placeholder.png";
+
   return (
     <>
       <Box component="section" sx={{ backgroundColor: "background.default" }}>
@@ -55,21 +57,42 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ eventId }) => {
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
             alignItems: "center",
+            width: "100%",
+            gap: isPlaceholder ? 4 : 0,
           }}
         >
           <Box
-            component="img"
-            src={`/${imageUrl}`}
-            alt={imageAlt}
             sx={{
               width: { xs: "100%", md: "50%" },
               height: "60vh",
-              objectFit: "cover",
               borderRadius: 4,
               boxShadow: 3,
+              overflow: "hidden",
+              backgroundColor: "background.paper",
+              p: isPlaceholder ? 2 : 0,
             }}
-          />
-          {imageUrl === "img/events/placeholder.png" && "test"}
+          >
+            {isPlaceholder && (
+              <Typography>
+                Das folgende Bild ist ein Platzhalterbild für eine Anwendung, in
+                der aktuell keine Bilder hochgeladen werden können. Es zeigt den
+                Text "PLATZHALTERBILD" in großer, dunkler Schrift und darunter
+                in kleinerer Schrift den Hinweis: "In dieser Anwendung können
+                noch keine Bilder hochgeladen werden." Der Hintergrund ist
+                hellgrau gehalten.
+              </Typography>
+            )}
+            <Box
+              component="img"
+              src={`/${imageUrl}`}
+              alt={imageAlt}
+              sx={{
+                width: "100%",
+                height: isPlaceholder ? "auto" : "100%",
+                objectFit: isPlaceholder ? "contain" : "cover",
+              }}
+            />
+          </Box>
           <Box
             sx={{
               display: "flex",
@@ -87,11 +110,10 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ eventId }) => {
               gap: 4,
               ml: {
                 xs: 0,
-                md: -20,
+                md: isPlaceholder ? 0 : -20,
               },
-
               mt: {
-                xs: -20,
+                xs: isPlaceholder ? 0 : -20,
                 md: 0,
               },
             }}
