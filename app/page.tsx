@@ -2,11 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Search, { SearchParams } from "@/components/Search";
 import Events from "@/components/Events";
 import Faqs from "@/components/Faqs";
 import { useEvents } from "./EventsProvider";
+import { visuallyHidden } from "@base-ui-components/react/utils";
 
 export default function Home() {
   const router = useRouter();
@@ -30,6 +31,9 @@ export default function Home() {
 
   return (
     <>
+      <Typography component="h1" sx={visuallyHidden}>
+        EventA11y - barrierefrei Events buchen
+      </Typography>
       <Box
         component="section"
         id="hero"

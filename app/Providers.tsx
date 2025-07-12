@@ -1,9 +1,9 @@
 "use client";
 
-import { SnackbarProvider } from "notistack";
+import { closeSnackbar, SnackbarProvider } from "notistack";
 import type { ReactNode } from "react";
 import { MaterialDesignContent } from "notistack";
-import { styled } from "@mui/material";
+import { Button, styled } from "@mui/material";
 
 const StyledMaterialDesignContent = styled(MaterialDesignContent)(() => ({
   "&.notistack-MuiContent-success": {
@@ -13,6 +13,23 @@ const StyledMaterialDesignContent = styled(MaterialDesignContent)(() => ({
 export default function Providers({ children }: { children: ReactNode }) {
   return (
     <SnackbarProvider
+      action={(snackbarId) => (
+        <Button
+          sx={{
+            backgroundColor: "background.paper",
+            color: "error.main",
+            py: 1,
+            px: 1,
+            "&:hover": {
+              backgroundColor: "background.default",
+              color: "error.dark",
+            },
+          }}
+          onClick={() => closeSnackbar(snackbarId)}
+        >
+          Schließen
+        </Button>
+      )}
       maxSnack={3}
       autoHideDuration={1000000}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}

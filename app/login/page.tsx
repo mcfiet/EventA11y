@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../AuthContext";
+import { visuallyHidden } from "@base-ui-components/react/utils";
 
 export default function Login() {
   const router = useRouter();
@@ -47,54 +48,59 @@ export default function Login() {
   };
 
   return (
-    <Box
-      component="section"
-      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
-      <Typography component="h2" variant="h2">
-        Login
+    <>
+      <Typography component="h1" sx={visuallyHidden}>
+        Account erstellen
       </Typography>
-
       <Box
-        component="form"
-        onSubmit={handleSubmit(onSubmit)}
-        noValidate
-        sx={{
-          width: { xs: "100%", md: "70%", lg: "50%" },
-          display: "flex",
-          flexDirection: "column",
-          gap: 4,
-          bgcolor: "background.paper",
-          p: 4,
-          borderRadius: "16px",
-          boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.06)",
-        }}
+        component="section"
+        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       >
-        <InputField<LoginFormValues>
-          name="username"
-          label="Benutzername"
-          register={register}
-          error={errors.username?.message}
-          placeholder="Dein Benutzername"
-          required
-        />
+        <Typography component="h2" variant="h2">
+          Login
+        </Typography>
 
-        <InputField<LoginFormValues>
-          name="password"
-          label="Passwort"
-          register={register}
-          error={errors.password?.message}
-          placeholder="Dein sicheres Passwort"
-          autoComplete="password"
-          required
-        />
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          sx={{
+            width: { xs: "100%", md: "70%", lg: "50%" },
+            display: "flex",
+            flexDirection: "column",
+            gap: 4,
+            bgcolor: "background.paper",
+            p: 4,
+            borderRadius: "16px",
+            boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.06)",
+          }}
+        >
+          <InputField<LoginFormValues>
+            name="username"
+            label="Benutzername"
+            register={register}
+            error={errors.username?.message}
+            placeholder="Dein Benutzername"
+            required
+          />
 
-        <Link href="/registration">Kein Account? Jetzt registrieren.</Link>
+          <InputField<LoginFormValues>
+            name="password"
+            label="Passwort"
+            register={register}
+            error={errors.password?.message}
+            placeholder="Dein sicheres Passwort"
+            autoComplete="password"
+            required
+          />
 
-        <Button type="submit" disabled={isSubmitting} sx={{ ml: "auto" }}>
-          Einloggen
-        </Button>
+          <Link href="/registration">Kein Account? Jetzt registrieren.</Link>
+
+          <Button type="submit" disabled={isSubmitting} sx={{ ml: "auto" }}>
+            Einloggen
+          </Button>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }

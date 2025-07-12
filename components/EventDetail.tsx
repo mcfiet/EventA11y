@@ -9,6 +9,7 @@ import { MusicNote } from "@mui/icons-material";
 import Event from "../types/Event";
 import { useEvents } from "@/app/EventsProvider";
 import { notFound } from "next/navigation";
+import { visuallyHidden } from "@base-ui-components/react/utils";
 
 interface EventDetailPageProps {
   eventId: string;
@@ -51,6 +52,9 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ eventId }) => {
 
   return (
     <>
+      <Typography component="h1" sx={visuallyHidden}>
+        Details zum Event: {title}
+      </Typography>
       <Box component="section" sx={{ backgroundColor: "background.default" }}>
         <Box
           sx={{
