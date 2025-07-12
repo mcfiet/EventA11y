@@ -17,7 +17,7 @@ import { useSnackbar } from "notistack";
 import UploadInput from "./UploadInput";
 import TagSelect from "./TagSelect";
 import { eventSchema, EventFormValues } from "@/lib/eventValidation";
-import InputField from "@/components/forms/InputField"; // generischer InputField
+import InputField from "@/components/forms/InputField";
 import DatePickerField from "../Datepicker";
 import { useEvents } from "@/app/EventsProvider";
 import Event from "@/types/Event";
@@ -71,6 +71,11 @@ export default function CreateEventForm() {
       },
     };
     addEvent(newEvent);
+    const stored = localStorage.getItem("customEventTags");
+    const custom = stored ? JSON.parse(stored) : [];
+    const newTags = data.tags?.filter((tag) => !custom.includes(tag)) || [];
+    const updatedTags = [...custom, ...newTags];
+    localStorage.setItem("customEventTags", JSON.stringify(updatedTags));
     enqueueSnackbar("Event temporär erstellt!", { variant: "success" });
     router.push(`/event/${newEvent.id}`);
   };
@@ -274,8 +279,12 @@ export default function CreateEventForm() {
           control={control}
           render={({ field }) => (
             <>
-              <TagSelect value={field.value} onChange={field.onChange} />
-              <FormHelperText error>{errors.tags?.message}</FormHelperText>
+              <TagSelect
+                value={field.value}
+                onChange={(newTags) => field.onChange(newTags)}
+                error={!!errors.tags}
+                helperText={errors.tags?.message as string}
+              />
             </>
           )}
         />
