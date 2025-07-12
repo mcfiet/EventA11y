@@ -53,6 +53,14 @@ const Footer: React.FC = () => {
           >
             Login
           </Link>
+          <Link
+            href="/sitemap"
+            underline="none"
+            color="text.primary"
+            variant="body2"
+          >
+            Sitemap
+          </Link>
           <Link href="#" underline="none" color="text.primary" variant="body2">
             Impressum
           </Link>
