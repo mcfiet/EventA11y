@@ -1,6 +1,6 @@
 "use client";
 
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Search from "@/components/Search";
 import Events from "@/components/Events";
 import { useEvents } from "@/app/EventsProvider";
@@ -34,6 +34,10 @@ export default function SearchClient() {
             router.push(`/search?${p.toString()}`);
           }}
         />
+        <Typography sx={{ mt: 4 }}>
+          {filteredEvents.length}{" "}
+          {filteredEvents.length > 1 ? "Events" : "Event"} gefunden
+        </Typography>
       </Box>
       <Events
         id="search-results"
