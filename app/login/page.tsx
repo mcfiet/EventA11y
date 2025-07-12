@@ -1,6 +1,6 @@
 "use client";
 
-import InputField from "@/components/InputFieldLogin";
+import InputField from "@/components/forms/InputField";
 import { LoginFormValues, loginSchema } from "@/lib/loginValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Link, Typography } from "@mui/material";
@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../AuthContext";
-import InputFieldPassword from "@/components/InputFieldPassword";
 
 export default function Login() {
   const router = useRouter();
@@ -71,20 +70,23 @@ export default function Login() {
           boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.06)",
         }}
       >
-        <InputField
+        <InputField<LoginFormValues>
           name="username"
-          label="Benutzername*"
+          label="Benutzername"
           register={register}
           error={errors.username?.message}
           placeholder="Dein Benutzername"
+          required
         />
 
-        <InputFieldPassword
+        <InputField<LoginFormValues>
           name="password"
-          label="Passwort*"
+          label="Passwort"
           register={register}
           error={errors.password?.message}
-          placeholder="Mind. 8 Zeichen"
+          placeholder="Dein sicheres Passwort"
+          autoComplete="password"
+          required
         />
 
         <Link href="/registration">Kein Account? Jetzt registrieren.</Link>

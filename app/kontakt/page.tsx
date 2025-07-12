@@ -1,4 +1,4 @@
-import ContactForm from "@/components/ContactForm";
+import ContactForm from "@/components/forms/ContactForm";
 import { Box, Typography, Grid } from "@mui/material";
 
 export default function Contact() {

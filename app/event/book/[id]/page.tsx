@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { events } from "@/data/Events";
 import Event from "@/types/Event";
-import BookingForm from "@/components/BookingForm";
+import BookingForm from "@/components/forms/BookingForm";
 import { Box, Typography } from "@mui/material";
 
 export default async function Page({
@@ -19,7 +19,7 @@ export default async function Page({
       <Typography component="h2" variant="h2">
         Event buchen
       </Typography>
-      <BookingForm eventTitle={event.title} maxTickets={event.ticketNumber} />
+      <BookingForm eventTitle={event.title} />
     </Box>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 
-import InputFieldPassword from "@/components/InputFieldPassword";
-import InputField from "@/components/InputFieldRegistration";
+import InputField from "@/components/forms/InputField";
 import {
   RegistrationFormValues,
   registrationSchema,
@@ -87,46 +86,53 @@ export default function Registration() {
       >
         <Box sx={{ display: "flex", gap: 2 }}>
           <Box sx={{ width: "100%" }}>
-            <InputField
+            <InputField<RegistrationFormValues>
               name="firstName"
-              label="Vorname*"
+              label="Vorname"
               register={register}
               error={errors.firstName?.message}
               placeholder="Max"
+              required
             />
           </Box>
           <Box sx={{ width: "100%" }}>
-            <InputField
+            <InputField<RegistrationFormValues>
               name="lastName"
-              label="Nachname*"
+              label="Nachname"
               register={register}
               error={errors.lastName?.message}
               placeholder="Mustermann"
+              required
             />
           </Box>
         </Box>
 
-        <InputField
+        <InputField<RegistrationFormValues>
           name="username"
-          label="Benutzername*"
+          label="Benutzername"
           register={register}
           error={errors.username?.message}
           placeholder="Dein Benutzername"
+          required
         />
 
-        <InputFieldPassword
+        <InputField<RegistrationFormValues>
           name="password"
-          label="Passwort*"
+          label="Passwort"
           register={register}
           error={errors.password?.message}
           placeholder="Mind. 8 Zeichen"
+          autoComplete="password"
+          required
         />
-        <InputFieldPassword
+        <InputField<RegistrationFormValues>
           name="passwordConfirm"
-          label="Passwort wiederholen*"
+          label="Passwort wiederholen"
           register={register}
           error={errors.passwordConfirm?.message}
           placeholder="Mind. 8 Zeichen"
+          autoComplete="password"
+          required
         />
 
         <Link href="/login">Du hast schon ein Konto? Jetzt einloggen.</Link>

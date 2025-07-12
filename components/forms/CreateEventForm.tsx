@@ -8,6 +8,7 @@ import {
   FormControl,
   FormControlLabel,
   InputLabel,
+  FormHelperText,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,11 +17,11 @@ import { useSnackbar } from "notistack";
 import UploadInput from "./UploadInput";
 import TagSelect from "./TagSelect";
 import { eventSchema, EventFormValues } from "@/lib/eventValidation";
-import InputField from "./InputFieldEvent";
-import DatePickerField from "./Datepicker";
+import InputField from "@/components/forms/InputField"; // generischer InputField
+import DatePickerField from "../Datepicker";
 import { useEvents } from "@/app/EventsProvider";
 import Event from "@/types/Event";
-import FormLegend from "./FormLegend";
+import FormLegend from "../FormLegend";
 
 export default function CreateEventForm() {
   const router = useRouter();
@@ -31,7 +32,7 @@ export default function CreateEventForm() {
     register,
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<EventFormValues>({
     resolver: zodResolver(eventSchema),
     defaultValues: {
@@ -54,7 +55,6 @@ export default function CreateEventForm() {
 
   const onSubmit = (data: EventFormValues) => {
     const imageUrl = "img/events/placeholder.png";
-
     const newEvent: Event = {
       ...data,
       id: Date.now().toString(),
@@ -92,6 +92,7 @@ export default function CreateEventForm() {
       }}
     >
       <FormLegend text="Um das Event zu erstellen, klicke den Button unten mit der Beschriftung 'Event erstellen'" />
+
       <Box
         sx={{
           display: "flex",
@@ -105,7 +106,6 @@ export default function CreateEventForm() {
             flexDirection: "column",
             gap: 2,
             width: { xs: "100%", lg: "50%" },
-            mb: "auto",
           }}
         >
           <FormControl required error={!!errors.image} variant="standard">
@@ -119,106 +119,118 @@ export default function CreateEventForm() {
                 position: "static",
               }}
             >
-              Bild
+              Bild*
             </InputLabel>
-
             <Controller
               name="image"
               control={control}
               render={({ field }) => (
-                <UploadInput
-                  value={field.value}
-                  onFileChangeAction={field.onChange}
-                  error={!!errors.image}
-                  helperText={errors.image?.message as string}
-                />
+                <>
+                  <UploadInput
+                    value={field.value}
+                    onFileChangeAction={field.onChange}
+                    error={!!errors.image}
+                    helperText={errors.image?.message as string}
+                  />
+                  <FormHelperText error>{errors.image?.message}</FormHelperText>
+                </>
               )}
             />
           </FormControl>
 
-          <InputField
-            required
+          <InputField<EventFormValues>
             name="imageAlt"
             label="Alternativer Text Bild"
-            placeholder="Ein gut beschreibener alternativer Text"
+            placeholder="Ein gut beschreibender alternativer Text"
             register={register}
             error={errors.imageAlt?.message}
+            required
           />
 
           <DatePickerField
+            control={control}
             name="startDate"
             label="Startdatum*"
-            control={control}
             error={errors.startDate?.message}
+            required
           />
           <DatePickerField
+            control={control}
             name="endDate"
             label="Enddatum*"
-            control={control}
             error={errors.endDate?.message}
+            required
           />
 
-          <InputField
-            required
+          <InputField<EventFormValues>
             name="ticketNumber"
-            label="Ticketanzahl"
+            label="Ticketanzahl*"
             placeholder="2"
             register={register}
             error={errors.ticketNumber?.message}
             type="number"
+            required
           />
         </Box>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          <InputField
-            required
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            width: { xs: "100%", lg: "50%" },
+          }}
+        >
+          <InputField<EventFormValues>
             name="title"
-            label="Titel"
+            label="Titel*"
             placeholder="Ein toller Titel"
             register={register}
             error={errors.title?.message}
-          />
-          <InputField
             required
+          />
+          <InputField<EventFormValues>
             name="shortDescription"
-            label="Kurzbeschreibung"
+            label="Kurzbeschreibung*"
             placeholder="Ein kürzerer Text zum Beschreiben"
             register={register}
             error={errors.shortDescription?.message}
             multiline
             minRows={4}
-          />
-          <InputField
             required
+          />
+          <InputField<EventFormValues>
             name="locationName"
-            label="Location Name"
+            label="Location Name*"
             placeholder="Musterfirma"
             register={register}
             error={errors.locationName?.message}
-          />
-          <InputField
             required
+          />
+          <InputField<EventFormValues>
             name="street"
-            label="Straße & Hausnummer"
+            label="Straße & Hausnummer*"
             placeholder="Musterstraße 1a"
             register={register}
             error={errors.street?.message}
+            required
           />
           <Box sx={{ display: "flex", gap: 2 }}>
-            <InputField
-              required
+            <InputField<EventFormValues>
               name="postalCode"
-              label="Postleitzahl"
+              label="Postleitzahl*"
               placeholder="12345"
               register={register}
               error={errors.postalCode?.message}
-            />
-            <InputField
               required
+            />
+            <InputField<EventFormValues>
               name="city"
-              label="Ort"
+              label="Ort*"
               placeholder="Musterort"
               register={register}
               error={errors.city?.message}
+              required
             />
           </Box>
           <Controller
@@ -233,7 +245,8 @@ export default function CreateEventForm() {
           />
         </Box>
       </Box>
-      <InputField
+
+      <InputField<EventFormValues>
         name="longDescription"
         label="Beschreibung (optional)"
         placeholder="Ein längerer Text zum Beschreiben"
@@ -242,7 +255,8 @@ export default function CreateEventForm() {
         multiline
         minRows={4}
       />
-      <FormControl variant="standard" error={!!errors.tags}>
+
+      <FormControl variant="standard" error={!!errors.tags} fullWidth>
         <InputLabel
           htmlFor="tags"
           shrink
@@ -255,21 +269,27 @@ export default function CreateEventForm() {
         >
           Tags (optional)
         </InputLabel>
-
         <Controller
           name="tags"
           control={control}
           render={({ field }) => (
-            <TagSelect
-              value={field.value}
-              onChange={(_evt, newValue) => field.onChange(newValue)}
-              error={!!errors.tags}
-              helperText={errors.tags?.message as string}
-            />
+            <>
+              <TagSelect value={field.value} onChange={field.onChange} />
+              <FormHelperText error>{errors.tags?.message}</FormHelperText>
+            </>
           )}
         />
       </FormControl>
-      <Button type="submit">Event erstellen</Button>
+
+      <FormControl variant="standard" fullWidth>
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          sx={{ alignSelf: "flex-end" }}
+        >
+          Event erstellen
+        </Button>
+      </FormControl>
     </Box>
   );
 }

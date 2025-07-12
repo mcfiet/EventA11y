@@ -6,9 +6,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { enqueueSnackbar } from "notistack";
 import { ContactFormValues, contactSchema } from "@/lib/contactValidation";
-import InputField from "./InputFieldContact";
+import InputField from "@/components/forms/InputField"; // generischer InputField
 import { useRouter } from "next/navigation";
-import FormLegend from "./FormLegend";
+import FormLegend from "../FormLegend";
 
 export default function ContactForm() {
   const router = useRouter();
@@ -49,6 +49,7 @@ export default function ContactForm() {
       }}
     >
       <FormLegend text="Um die Kontaktabfrage abzuschicken, klicke den Button unten mit der Beschriftung 'Senden'" />
+
       <Box
         sx={{
           display: "flex",
@@ -57,58 +58,62 @@ export default function ContactForm() {
         }}
       >
         <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-          <InputField
+          <InputField<ContactFormValues>
             name="firstName"
-            label="Vorname*"
+            label="Vorname"
             register={register}
             error={errors.firstName?.message}
             placeholder="Max"
-            autocomplete="first-name"
+            autoComplete="given-name"
+            required
           />
         </Box>
         <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-          <InputField
+          <InputField<ContactFormValues>
             name="lastName"
-            label="Nachname*"
+            label="Nachname"
             register={register}
             error={errors.lastName?.message}
             placeholder="Mustermann"
-            autocomplete="family-name"
+            autoComplete="family-name"
+            required
           />
         </Box>
       </Box>
 
-      <InputField
+      <InputField<ContactFormValues>
         name="email"
-        label="E-Mail*"
+        label="E-Mail"
         register={register}
         error={errors.email?.message}
         placeholder="maxmustermann@mustermail.de"
         type="email"
-        autocomplete="email"
+        autoComplete="email"
+        required
       />
 
-      <InputField
+      <InputField<ContactFormValues>
         name="phone"
         label="Telefon (optional)"
         register={register}
         error={errors.phone?.message}
-        placeholder="012345621"
+        placeholder="0123456789"
         type="tel"
-        autocomplete="tel"
+        autoComplete="tel"
       />
 
-      <InputField
+      <InputField<ContactFormValues>
         name="message"
-        label="Nachricht*"
+        label="Nachricht"
         register={register}
         error={errors.message?.message}
         placeholder="Schreiben Sie uns eine Nachricht"
         multiline
         minRows={5}
+        required
       />
 
-      <FormControl variant="standard" error={false} fullWidth>
+      <FormControl variant="standard" fullWidth>
         <Button
           type="submit"
           disabled={isSubmitting}

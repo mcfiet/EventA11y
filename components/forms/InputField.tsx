@@ -1,25 +1,26 @@
-import { BookingFormValues } from "@/lib/bookingValidation";
+import React from "react";
 import {
   FormControl,
   InputLabel,
   InputBase,
   FormHelperText,
 } from "@mui/material";
-import { UseFormRegister } from "react-hook-form";
+import { FieldPath, FieldValues, UseFormRegister } from "react-hook-form";
 
-interface InputFieldBookingProps {
-  name: keyof BookingFormValues;
+export interface InputFieldProps<T extends FieldValues> {
+  name: FieldPath<T>;
   label: string;
-  register: UseFormRegister<BookingFormValues>;
+  register: UseFormRegister<T>;
   error?: string;
   type?: React.InputHTMLAttributes<unknown>["type"];
   multiline?: boolean;
   minRows?: number;
   placeholder?: string;
-  autocomplete?: string;
+  required?: boolean;
+  autoComplete?: string;
 }
 
-export default function InputFieldBooking({
+export default function InputField<T extends FieldValues>({
   name,
   label,
   register,
@@ -28,10 +29,11 @@ export default function InputFieldBooking({
   multiline = false,
   minRows,
   placeholder,
-  autocomplete,
-}: InputFieldBookingProps) {
+  required = false,
+  autoComplete,
+}: InputFieldProps<T>) {
   return (
-    <FormControl variant="standard" error={!!error} fullWidth>
+    <FormControl fullWidth error={!!error} required={required} margin="normal">
       <InputLabel
         shrink
         htmlFor={String(name)}
@@ -45,14 +47,16 @@ export default function InputFieldBooking({
         {label}
       </InputLabel>
       <InputBase
-        id={String(name)}
-        {...register(name, { valueAsNumber: type === "number" })}
+        id={name}
+        {...register(name, {
+          valueAsNumber: type === "number",
+        })}
         type={type}
         multiline={multiline}
         minRows={minRows}
         placeholder={placeholder}
+        autoComplete={autoComplete}
         inputProps={multiline ? { style: { resize: "vertical" } } : undefined}
-        autoComplete={autocomplete}
       />
       <FormHelperText>{error}</FormHelperText>
     </FormControl>

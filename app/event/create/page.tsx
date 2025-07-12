@@ -1,6 +1,6 @@
 "use client";
 
-import CreateEventForm from "@/components/CreateEventForm";
+import CreateEventForm from "@/components/forms/CreateEventForm";
 import { Box, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";

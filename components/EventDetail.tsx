@@ -69,6 +69,7 @@ const EventDetailPage: React.FC<EventDetailPageProps> = ({ eventId }) => {
               boxShadow: 3,
             }}
           />
+          {imageUrl === "img/events/placeholder.png" && "test"}
           <Box
             sx={{
               display: "flex",

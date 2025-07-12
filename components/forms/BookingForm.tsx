@@ -1,42 +1,30 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  FormControl,
-  Typography,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormHelperText,
-} from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
+import { Box, Button, Typography, FormControl } from "@mui/material";
+import { useForm } from "react-hook-form";
 import { enqueueSnackbar } from "notistack";
-import InputField from "./InputFieldBooking";
-import { BookingFormValues } from "@/lib/bookingValidation";
-import BookingConfirmation from "./BookingConfirmation";
-import FormLegend from "./FormLegend";
+import InputField from "@/components/forms/InputField";
+import { BookingFormValues, bookingSchema } from "@/lib/bookingValidation";
+import BookingConfirmation from "../BookingConfirmation";
+import FormLegend from "../FormLegend";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface BookingFormProps {
   eventTitle: string;
-  maxTickets: number;
 }
 
-const BookingForm: React.FC<BookingFormProps> = ({
-  eventTitle,
-  maxTickets,
-}) => {
+const BookingForm: React.FC<BookingFormProps> = ({ eventTitle }) => {
   const [confirmation, setConfirmation] = useState<BookingFormValues | null>(
     null,
   );
 
   const {
-    control,
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<BookingFormValues>({
+    resolver: zodResolver(bookingSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -62,6 +50,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
       />
     );
   }
+
   return (
     <Box
       component="form"
@@ -75,11 +64,12 @@ const BookingForm: React.FC<BookingFormProps> = ({
         p: 4,
         borderRadius: "16px",
         boxShadow: 2,
-        maxWidth: 500,
+        maxWidth: 700,
         margin: "0 auto",
       }}
     >
       <FormLegend text="Um die Buchung abzuschicken, klicke den Button unten mit der Beschriftung 'Buchung abschicken'" />
+
       <Typography variant="h3" fontWeight="bold" mb={2}>
         Tickets buchen für: <br />
         <span style={{ color: "#84234f" }}>{eventTitle}</span>
@@ -93,67 +83,51 @@ const BookingForm: React.FC<BookingFormProps> = ({
         }}
       >
         <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-          <InputField
+          <InputField<BookingFormValues>
             name="firstName"
-            label="Vorname*"
+            label="Vorname"
             register={register}
             error={errors.firstName?.message}
             placeholder="Max"
-            autocomplete="first-name"
+            autoComplete="given-name"
+            required
           />
         </Box>
         <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-          <InputField
+          <InputField<BookingFormValues>
             name="lastName"
-            label="Nachname*"
+            label="Nachname"
             register={register}
             error={errors.lastName?.message}
             placeholder="Mustermann"
-            autocomplete="family-name"
+            autoComplete="family-name"
+            required
           />
         </Box>
       </Box>
 
-      <InputField
+      <InputField<BookingFormValues>
         name="email"
-        label="E-Mail*"
+        label="E-Mail"
         register={register}
         error={errors.email?.message}
         placeholder="maxmustermann@mustermail.de"
         type="email"
-        autocomplete="email"
+        autoComplete="email"
+        required
       />
 
-      <FormControl
-        variant="standard"
-        error={!!errors.ticketCount}
-        fullWidth
-        sx={{ mt: 2 }}
-      >
-        <InputLabel id="ticketCount-label">Tickets*</InputLabel>
-        <Controller
-          control={control}
-          name="ticketCount"
-          rules={{ required: "Bitte Anzahl auswählen" }}
-          render={({ field }) => (
-            <Select
-              {...field}
-              labelId="ticketCount-label"
-              label="Tickets*"
-              sx={{ borderRadius: 2 }}
-            >
-              {Array.from({ length: maxTickets }, (_, i) => (
-                <MenuItem value={i + 1} key={i + 1}>
-                  {i + 1}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
-        />
-        <FormHelperText>{errors.ticketCount?.message}</FormHelperText>
-      </FormControl>
+      <InputField<BookingFormValues>
+        name="ticketCount"
+        label="Ticketanzahl"
+        placeholder="2"
+        register={register}
+        error={errors.ticketCount?.message}
+        type="number"
+        required
+      />
 
-      <InputField
+      <InputField<BookingFormValues>
         name="message"
         label="Nachricht (optional)"
         register={register}
@@ -163,7 +137,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
         minRows={3}
       />
 
-      <FormControl variant="standard" error={false} fullWidth>
+      <FormControl variant="standard" fullWidth>
         <Button
           type="submit"
           disabled={isSubmitting}

@@ -10,6 +10,7 @@ interface DatePickerFieldProps {
   label: string;
   control: ReturnType<typeof useForm<EventFormValues>>["control"];
   error?: string;
+  required: boolean;
 }
 
 export default function DatePickerField({
@@ -17,6 +18,7 @@ export default function DatePickerField({
   label,
   control,
   error,
+  required,
 }: DatePickerFieldProps) {
   return (
     <FormControl variant="standard" error={!!error} sx={{ flex: 1 }}>
@@ -37,9 +39,11 @@ export default function DatePickerField({
         control={control}
         render={({ field }) => (
           <DatePicker
+            value={field.value ? dayjs(field.value) : null}
             onChange={(newVal) => field.onChange(newVal?.toDate() ?? null)}
             slotProps={{
               textField: {
+                required: required,
                 id: name,
                 sx: {
                   width: "100%",
