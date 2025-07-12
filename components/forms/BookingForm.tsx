@@ -68,13 +68,11 @@ const BookingForm: React.FC<BookingFormProps> = ({ eventTitle }) => {
         margin: "0 auto",
       }}
     >
-      <FormLegend text="Um die Buchung abzuschicken, klicke den Button unten mit der Beschriftung 'Buchung abschicken'" />
-
       <Typography variant="h3" fontWeight="bold" mb={2}>
         Tickets buchen für: <br />
         <span style={{ color: "#84234f" }}>{eventTitle}</span>
       </Typography>
-
+      <FormLegend text="Um die Buchung abzuschicken, klicke den Button unten mit der Beschriftung 'Buchung abschicken'" />
       <Box
         sx={{
           display: "flex",

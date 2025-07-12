@@ -17,7 +17,12 @@ export default function FormLegend({ text }: FormLegendProps) {
         borderRadius: 1,
       }}
     >
-      <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+      <Typography
+        variant="subtitle1"
+        component="h4"
+        fontWeight="bold"
+        gutterBottom
+      >
         Legende:
       </Typography>
       <List>
