@@ -1,6 +1,7 @@
 "use client";
 
 import InputField from "@/components/forms/InputField";
+import InputFieldPassword from "@/components/forms/InputFieldPassword";
 import {
   RegistrationFormValues,
   registrationSchema,
@@ -121,22 +122,20 @@ export default function Registration() {
             required
           />
 
-          <InputField<RegistrationFormValues>
+          <InputFieldPassword
             name="password"
             label="Passwort"
             register={register}
             error={errors.password?.message}
             placeholder="Mind. 8 Zeichen"
-            autoComplete="password"
             required
           />
-          <InputField<RegistrationFormValues>
+          <InputFieldPassword
             name="passwordConfirm"
             label="Passwort wiederholen"
             register={register}
             error={errors.passwordConfirm?.message}
             placeholder="Mind. 8 Zeichen"
-            autoComplete="password"
             required
           />
 

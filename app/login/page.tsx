@@ -9,6 +9,7 @@ import { enqueueSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../AuthContext";
 import { visuallyHidden } from "@base-ui-components/react/utils";
+import InputFieldPassword from "@/components/forms/InputFieldPassword";
 
 export default function Login() {
   const router = useRouter();
@@ -84,13 +85,12 @@ export default function Login() {
             required
           />
 
-          <InputField<LoginFormValues>
+          <InputFieldPassword
             name="password"
             label="Passwort"
             register={register}
             error={errors.password?.message}
-            placeholder="Dein sicheres Passwort"
-            autoComplete="password"
+            placeholder="Dein super sicheres Passwort"
             required
           />
 
