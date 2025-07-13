@@ -137,7 +137,6 @@ export default function CreateEventForm() {
                     error={!!errors.image}
                     helperText={errors.image?.message as string}
                   />
-                  <FormHelperText error>{errors.image?.message}</FormHelperText>
                 </>
               )}
             />
@@ -169,7 +168,7 @@ export default function CreateEventForm() {
 
           <InputField<EventFormValues>
             name="ticketNumber"
-            label="Ticketanzahl*"
+            label="Ticketanzahl"
             placeholder="2"
             register={register}
             error={errors.ticketNumber?.message}
@@ -188,7 +187,7 @@ export default function CreateEventForm() {
         >
           <InputField<EventFormValues>
             name="title"
-            label="Titel*"
+            label="Titel"
             placeholder="Ein toller Titel"
             register={register}
             error={errors.title?.message}
@@ -196,7 +195,7 @@ export default function CreateEventForm() {
           />
           <InputField<EventFormValues>
             name="shortDescription"
-            label="Kurzbeschreibung*"
+            label="Kurzbeschreibung"
             placeholder="Ein kürzerer Text zum Beschreiben"
             register={register}
             error={errors.shortDescription?.message}
@@ -206,7 +205,7 @@ export default function CreateEventForm() {
           />
           <InputField<EventFormValues>
             name="locationName"
-            label="Location Name*"
+            label="Location Name"
             placeholder="Musterfirma"
             register={register}
             error={errors.locationName?.message}
@@ -214,7 +213,7 @@ export default function CreateEventForm() {
           />
           <InputField<EventFormValues>
             name="street"
-            label="Straße & Hausnummer*"
+            label="Straße & Hausnummer"
             placeholder="Musterstraße 1a"
             register={register}
             error={errors.street?.message}
@@ -223,7 +222,7 @@ export default function CreateEventForm() {
           <Box sx={{ display: "flex", gap: 2 }}>
             <InputField<EventFormValues>
               name="postalCode"
-              label="Postleitzahl*"
+              label="Postleitzahl"
               placeholder="12345"
               register={register}
               error={errors.postalCode?.message}
@@ -231,7 +230,7 @@ export default function CreateEventForm() {
             />
             <InputField<EventFormValues>
               name="city"
-              label="Ort*"
+              label="Ort"
               placeholder="Musterort"
               register={register}
               error={errors.city?.message}
