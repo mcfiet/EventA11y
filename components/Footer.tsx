@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Link, Typography, Stack, IconButton } from "@mui/material";
+import {
+  Box,
+  Link,
+  Typography,
+  Stack,
+  IconButton,
+  Button,
+} from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YouTubeIcon from "@mui/icons-material/YouTube";
@@ -92,6 +99,30 @@ const Footer: React.FC = () => {
             <YouTubeIcon fontSize="inherit" />
           </IconButton>
         </Stack>
+
+        <Box
+          sx={{
+            pt: 2,
+            maxWidth: "60ch",
+            mx: "auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <Typography component="h3" variant="h3">
+            Barriere melden
+          </Typography>
+          <Typography>
+            Wir möchten unsere Website so barrierefrei wie möglich gestalten.
+            Wenn Ihnen Zugangsprobleme auffallen oder Sie
+            Verbesserungsvorschläge haben, freuen wir uns über Ihre Rückmeldung.
+          </Typography>
+          <Button href="mailto:accessiblity@eventa11y.de" sx={{ mt: 2 }}>
+            Email schreiben
+          </Button>
+        </Box>
 
         <Typography
           variant="body2"
