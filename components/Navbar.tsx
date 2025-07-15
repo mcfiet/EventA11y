@@ -15,6 +15,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/app/AuthContext";
+import AccountMenu from "./AccountMenu";
 
 interface MenuItem {
   name: string;
@@ -25,10 +26,10 @@ const menuItems: MenuItem[] = [
   { name: "Home", href: "/" },
   { name: "Neue Events", href: "/#new-events" },
   { name: "Kommende Events", href: "/#upcoming-events" },
+  { name: "FAQs", href: "/#faq" },
 ];
 
 export function Navbar() {
-  const { currentUser, logout } = useAuth();
   const theme = useTheme();
   const pathname = usePathname();
   const firstMenuItemRef = useRef<HTMLAnchorElement>(null);
@@ -162,51 +163,9 @@ export function Navbar() {
               </Link>
             </Box>
           ))}
-          {currentUser ? (
-            <>
-              <Box component="li" key="createEvent">
-                <Link
-                  href="/event/create"
-                  {...("create-event" === pathname && {
-                    "aria-current": "page",
-                  })}
-                  tabIndex={0}
-                  sx={{
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  Event erstellen
-                </Link>
-              </Box>
-              <Box component="li" key="logout">
-                <Link
-                  onClick={() => {
-                    logout();
-                    window.location.href = "/";
-                  }}
-                  tabIndex={0}
-                  sx={{
-                    whiteSpace: "nowrap",
-                    cursor: "pointer",
-                  }}
-                >
-                  Logout
-                </Link>
-              </Box>
-            </>
-          ) : (
-            <Box component="li" key="login">
-              <Link
-                href="/login"
-                tabIndex={0}
-                sx={{
-                  whiteSpace: "nowrap",
-                }}
-              >
-                Login
-              </Link>
-            </Box>
-          )}
+          <Box component="li" key="accountMenu">
+            <AccountMenu />
+          </Box>
           <Box component="li" key="kontakt">
             <Button href="/kontakt" component="a" tabIndex={0}>
               Kontakt
