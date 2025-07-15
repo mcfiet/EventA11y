@@ -16,6 +16,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/app/AuthContext";
 import AccountMenu from "./AccountMenu";
+import AccountMenuList from "./AccountMenuList";
 
 interface MenuItem {
   name: string;
@@ -164,7 +165,7 @@ export function Navbar() {
             </Box>
           ))}
           <Box component="li" key="accountMenu">
-            <AccountMenu />
+            <AccountMenuList />
           </Box>
           <Box component="li" key="kontakt">
             <Button href="/kontakt" component="a" tabIndex={0}>
