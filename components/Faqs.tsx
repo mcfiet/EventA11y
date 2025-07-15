@@ -12,7 +12,11 @@ export default function Faqs() {
   return (
     <>
       <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <AccordionSummary
+          id="eventa11yExplanation-header"
+          aria-controls="eventa11yExplanation-content"
+          expandIcon={<ExpandMoreIcon />}
+        >
           Was ist Event A11y und was bietet die Website?
         </AccordionSummary>
         <AccordionDetails>
@@ -24,7 +28,11 @@ export default function Faqs() {
         </AccordionDetails>
       </Accordion>
       <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <AccordionSummary
+          id="barrieren-header"
+          aria-controls="barrieren-content"
+          expandIcon={<ExpandMoreIcon />}
+        >
           Welche Barrieren werden bei Veranstaltungen thematisiert?
         </AccordionSummary>
         <AccordionDetails>
@@ -52,7 +60,11 @@ export default function Faqs() {
         </AccordionDetails>
       </Accordion>
       <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <AccordionSummary
+          id="tools-header"
+          aria-controls="tools-content"
+          expandIcon={<ExpandMoreIcon />}
+        >
           Gibt es konkrete Tools oder Checklisten, die ich nutzen kann?
         </AccordionSummary>
         <AccordionDetails>
@@ -64,7 +76,11 @@ export default function Faqs() {
         </AccordionDetails>
       </Accordion>
       <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <AccordionSummary
+          id="offer-header"
+          aria-controls="offer-content"
+          expandIcon={<ExpandMoreIcon />}
+        >
           An wen richtet sich das Angebot?
         </AccordionSummary>
         <AccordionDetails>
