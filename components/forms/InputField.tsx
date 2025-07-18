@@ -57,8 +57,9 @@ export default function InputField<T extends FieldValues>({
         placeholder={placeholder}
         autoComplete={autoComplete}
         inputProps={multiline ? { style: { resize: "vertical" } } : undefined}
+        aria-describedby={name + "_helper"}
       />
-      <FormHelperText>{error}</FormHelperText>
+      <FormHelperText id={name + "_helper"}>{error}</FormHelperText>
     </FormControl>
   );
 }

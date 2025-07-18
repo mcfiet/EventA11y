@@ -124,6 +124,7 @@ export default function UploadInput({
           role="button"
           tabIndex={0}
           aria-label="Datei hochladen"
+          aria-describedby={`image_helper`}
         >
           <CloudUploadIcon fontSize="small" sx={{ mb: 1 }} />
           <Typography variant="body2">
@@ -142,7 +143,12 @@ export default function UploadInput({
       />
 
       {error && (
-        <Typography variant="caption" color="error" sx={{ mt: 1 }}>
+        <Typography
+          id={`image_helper`}
+          variant="caption"
+          color="error"
+          sx={{ mt: 1 }}
+        >
           {helperText}
         </Typography>
       )}

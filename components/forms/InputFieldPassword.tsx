@@ -53,6 +53,7 @@ export default function InputFieldPassword({
         {...register(name)}
         type={showPassword ? "text" : "password"}
         placeholder={placeholder}
+        aria-describedby={name + "_helper"}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
@@ -74,7 +75,7 @@ export default function InputFieldPassword({
         }}
         fullWidth
       />
-      <FormHelperText id={`${name}-helper-text`}>{error}</FormHelperText>
+      <FormHelperText id={`${name}_helper`}>{error}</FormHelperText>
     </FormControl>
   );
 }
