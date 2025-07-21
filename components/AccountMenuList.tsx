@@ -88,6 +88,7 @@ export default function MenuListComposition() {
           placement="bottom-start"
           transition
           disablePortal
+          sx={{ zIndex: 2 }}
         >
           {({ TransitionProps, placement }) => (
             <Grow
